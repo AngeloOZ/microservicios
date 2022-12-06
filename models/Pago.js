@@ -11,7 +11,7 @@ const Pago = sequelize.define('Pago', {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    nombre:{
+    descripcion:{
         type: DataTypes.STRING(100),
         allowNull: false,
     },

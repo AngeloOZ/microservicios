@@ -10,20 +10,8 @@ const E_Productor = sequelize.define('E_Productor', {
     id_usuario:{
         type: DataTypes.INTEGER,
     },
-    num_registro:{
-        type: DataTypes.STRING(50),
-        allowNull: false,
-    },
-    num_manifiesto:{
-        type: DataTypes.STRING(50),
-        allowNull: false,
-    },
     ruc:{
-        type: DataTypes.STRING(20),
-        allowNull: false,
-    },
-    nombre_instalacion:{
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING(13),
         allowNull: false,
     },
     estado: {

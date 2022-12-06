@@ -2,10 +2,13 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('./database');
 
 const AEE = sequelize.define('AEE', {
-    id_instalacion: {
+    id_aee: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+    },
+    id_instalaciones: {
+        type: DataTypes.INTEGER,
     },
     nombre: {
         type: DataTypes.STRING(100),

@@ -10,10 +10,6 @@ const Transportista = sequelize.define('Transportista', {
     id_usuario:{
         type: DataTypes.INTEGER
     },
-    nombre:{
-        type: DataTypes.STRING(100),
-        allowNull: false
-    },
     cargo:{
         type: DataTypes.STRING(100),
         allowNull: false
