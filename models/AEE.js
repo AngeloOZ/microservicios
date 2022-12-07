@@ -7,9 +7,9 @@ const AEE = sequelize.define('AEE', {
         primaryKey: true,
         autoIncrement: true,
     },
-    id_instalaciones: {
-        type: DataTypes.INTEGER,
-    },
+    // id_instalaciones: {
+    //     type: DataTypes.INTEGER,
+    // },
     nombre: {
         type: DataTypes.STRING(100),
         allowNull: false,

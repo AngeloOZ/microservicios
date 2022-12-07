@@ -14,49 +14,109 @@ const Usuario = require("./Usuario");
 
 
 /* Relacion uno a uno Usuario = E_productor */
-Usuario.hasOne(E_Productor);
-E_Productor.belongsTo(Usuario);
+Usuario.hasOne(E_Productor, {
+    foreignKey: "id_usuario",
+    sourceKey: "id_usuario"
+});
+E_Productor.belongsTo(Usuario, {
+    foreignKey: "id_usuario",
+    targetKey: "id_usuario"
+});
 
 /* Relacion uno a uno Usuario => E_transportista */
-Usuario.hasOne(E_Trasportista);
-E_Trasportista.belongsTo(Usuario);
+Usuario.hasOne(E_Trasportista, {
+    foreignKey: "id_usuario",
+    sourceKey: "id_usuario"
+});
+E_Trasportista.belongsTo(Usuario, {
+    foreignKey: "id_usuario",
+    targetKey: "id_usuario"
+});
 
 /* Relacion uno a uno Usuario => Transportista */
-Usuario.hasOne(Transportista);
-Transportista.belongsTo(Usuario);
+Usuario.hasOne(Transportista, {
+    foreignKey: "id_usuario",
+    sourceKey: "id_usuario"
+});
+Transportista.belongsTo(Usuario, {
+    foreignKey: "id_usuario",
+    targetKey: "id_usuario"
+});
 
 /* Relacion uno a uno Usuario => E_Destinataria */
-Usuario.hasOne(E_Destinataria);
-E_Destinataria.belongsTo(Usuario);
+Usuario.hasOne(E_Destinataria, {
+    foreignKey: "id_usuario",
+    sourceKey: "id_usuario"
+});
+E_Destinataria.belongsTo(Usuario, {
+    foreignKey: "id_usuario",
+    targetKey: "id_usuario"
+});
 
 /* Relacion uno a muchos E_Productor => Instalacion */
 E_Productor.hasMany(Instalaciones);
 Instalaciones.belongsTo(E_Productor);
 
 /* Relacion uno a muchos Instalaciones => AEE (Aparato Electrico y Electronico) */
-Instalaciones.hasMany(AEE);
-AEE.belongsTo(Instalaciones);
+Instalaciones.hasMany(AEE,{
+    foreignKey: "id_instalacion",
+    sourceKey: "id_instalacion"
+});
+AEE.belongsTo(Instalaciones,{
+    foreignKey: "id_instalacion",
+    targetKey: "id_instalacion"
+});
 
 /* Relacion muchos a muchos Usuarios => Manifiesto */
-Usuario.belongsToMany(Manifiesto)
-Manifiesto.belongsToMany(Usuario);
+// Usuario.belongsToMany(Manifiesto)
+// Manifiesto.belongsToMany(Usuario);
 
 /* Relacion uno a uno Manifiesto => Manifiesto_Productor */
-Manifiesto.hasOne(Manifiesto_Productor)
-Manifiesto_Productor.belongsTo(Manifiesto);
+Manifiesto.hasOne(Manifiesto_Productor, {
+    foreignKey: "id_manifiesto",
+    sourceKey: "id_manifiesto"
+})
+Manifiesto_Productor.belongsTo(Manifiesto, {
+    foreignKey: "id_manifiesto",
+    targetKey: "id_manifiesto"
+});
 
 /* Relacion uno a uno Manifiesto => Manifiesto_Transportista */
-Manifiesto.hasOne(Manifiesto_Transportista)
-Manifiesto_Transportista.belongsTo(Manifiesto);
+Manifiesto.hasOne(Manifiesto_Transportista,{
+    foreignKey: "id_manifiesto",
+    sourceKey: "id_manifiesto"
+})
+Manifiesto_Transportista.belongsTo(Manifiesto,{
+    foreignKey: "id_manifiesto",
+    targetKey: "id_manifiesto"
+});
 
 /* Relacion uno a uno Manifiesto => Manifiesto_Destinatario */
-Manifiesto.hasOne(Manifiesto_Destinatario)
-Manifiesto_Destinatario.belongsTo(Manifiesto);
+Manifiesto.hasOne(Manifiesto_Destinatario,{
+    foreignKey: "id_manifiesto",
+    sourceKey: "id_manifiesto"
+})
+Manifiesto_Destinatario.belongsTo(Manifiesto,{
+    foreignKey: "id_manifiesto",
+    sourceKey: "id_manifiesto"
+});
 
 /* Relacion uno a muchos Usuario => Pago */
-Usuario.hasMany(Pago)
-Pago.belongsTo(Usuario);
+Usuario.hasMany(Pago,{
+    foreignKey: "id_usuario",
+    sourceKey: "id_usuario"
+})
+Pago.belongsTo(Usuario,{
+    foreignKey: "id_usuario",
+    targetKey: "id_usuario"
+});
 
 /* Relacion uno a muchos Tipo => Usuarios */
-Tipo.hasMany(Usuario)
-Usuario.belongsTo(Tipo);
+Tipo.hasMany(Usuario,{
+    foreignKey: "id_Tipo",
+    sourceKey: "id_Tipo"
+})
+Usuario.belongsTo(Tipo,{
+    foreignKey: "id_Tipo",
+    targetKey: "id_Tipo"
+});

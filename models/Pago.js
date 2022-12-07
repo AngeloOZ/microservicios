@@ -7,10 +7,10 @@ const Pago = sequelize.define('Pago', {
         primaryKey: true,
         autoIncrement: true,
     },
-    id_usuario:{
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
+    // id_usuario:{
+    //     type: DataTypes.INTEGER,
+    //     allowNull: false,
+    // },
     descripcion:{
         type: DataTypes.STRING(100),
         allowNull: false,

@@ -7,9 +7,9 @@ const E_Productor = sequelize.define('E_Productor', {
         primaryKey: true,
         autoIncrement: true,
     },
-    id_usuario:{
-        type: DataTypes.INTEGER,
-    },
+    // id_usuario:{
+    //     type: DataTypes.INTEGER,
+    // },
     ruc:{
         type: DataTypes.STRING(13),
         allowNull: false,
