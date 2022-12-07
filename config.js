@@ -5,6 +5,7 @@ module.exports = {
     jwt: {
         secret: process.env.JWT_SECRET || 'notasecret!',
     },
+    currentDB: "remote",
     mysql: {
         host: process.env.MYSQL_HOST || 'mysql-jessicamilena.alwaysdata.net',
         user: process.env.MYSQL_USER || '289153_root',
