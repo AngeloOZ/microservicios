@@ -13,7 +13,6 @@ const Transportista = require("./Transportista");
 const Usuario = require("./Usuario");
 const UsuarioManifiesto = require("./UsuarioManifiesto");
 
-
 /* Relacion uno a uno Usuario = E_productor */
 Usuario.hasOne(E_Productor, {
     foreignKey: "id_usuario",
@@ -124,10 +123,10 @@ Pago.belongsTo(Usuario, {
 
 /* Relacion uno a muchos Tipo => Usuarios */
 Tipo.hasMany(Usuario, {
-    foreignKey: "id_Tipo",
-    sourceKey: "id_Tipo"
+    foreignKey: "id_tipo",
+    sourceKey: "id_tipo"
 })
 Usuario.belongsTo(Tipo, {
-    foreignKey: "id_Tipo",
-    targetKey: "id_Tipo"
+    foreignKey: "id_tipo",
+    targetKey: "id_tipo"
 });

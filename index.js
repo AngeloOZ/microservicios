@@ -1,9 +1,8 @@
 const express = require('express');
-const path = require('path');
 const cors = require('cors')
 const cookieParser = require('cookie-parser');
-require("dotenv").config();
 const sequelize = require('./models/database');
+require("dotenv").config();
 require("./models/init_relacions");
 // require("./models/inicializar_datos");
 
@@ -14,9 +13,7 @@ const port = process.env.PORT || 4010;
 /*                          Funciones de middlewares                          */
 /* -------------------------------------------------------------------------- */
 app.use(express.json());
-app.use(express.urlencoded({ force: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors())
 
 /* -------------------------------------------------------------------------- */
@@ -26,7 +23,7 @@ app.get('/api', (req, res) => {
     res.status(404).json({ status: 404, message: "Bad request" });
 });
 
-// app.use('/api/v1/usuarios-transportistas', require("./src/auth/routes/usuarioTransportsta.routes"));
+app.use('/api/v1/empresa-productora', require("./src/auth/routes/eProductora.routes"));
 
 /* -------------------------------------------------------------------------- */
 /*                        Manejo de errores y servidor                        */
@@ -37,7 +34,7 @@ app.use(function (req, res, next) {
 
 app.listen(port, async () => {
     try {
-        await sequelize.authenticate();
+        // await sequelize.authenticate();
         // sequelize.sync({force: true})
         console.log(`Application is listening at port ${port}`);
     } catch (err) {

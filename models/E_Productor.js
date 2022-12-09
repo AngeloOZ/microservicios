@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('./database');
 
-const E_Productor = sequelize.define('E_Productor', {
+const E_Productor = sequelize.define('E_Productora', {
     id_eproductor: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -14,14 +14,14 @@ const E_Productor = sequelize.define('E_Productor', {
         type: DataTypes.STRING(13),
         allowNull: false,
     },
-    estado: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 0,
-    }
+    // estado: {
+    //     type: DataTypes.INTEGER,
+    //     allowNull: false,
+    //     defaultValue: 0,
+    // }
 }, {
     timestamps: false,
-    tableName: "E_Productor"
+    tableName: "E_Productora"
 });
 
 module.exports = E_Productor;

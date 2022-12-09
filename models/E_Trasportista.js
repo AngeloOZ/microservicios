@@ -15,11 +15,11 @@ const E_Trasportista = sequelize.define('E_Trasportista', {
         type: DataTypes.STRING(50),
         allowNull: false,
     },
-    estado: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 0,
-    }
+    // estado: {
+    //     type: DataTypes.INTEGER,
+    //     allowNull: false,
+    //     defaultValue: 0,
+    // }
 }, {
     timestamps: false,
     tableName: "E_Trasportista"

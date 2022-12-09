@@ -11,11 +11,11 @@ const E_Destinataria = sequelize.define('E_Destinataria', {
         type: DataTypes.STRING(15),
         allowNull: false,
     },
-    estado: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 0,
-    }
+    // estado: {
+    //     type: DataTypes.INTEGER,
+    //     allowNull: false,
+    //     defaultValue: 0,
+    // }
 }, {
     timestamps: false,
     tableName: "E_Destinataria"

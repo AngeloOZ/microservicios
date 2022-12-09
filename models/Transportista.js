@@ -22,11 +22,11 @@ const Transportista = sequelize.define('Transportista', {
         type: DataTypes.STRING(100),
         allowNull: false
     },
-    estado:{
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 0
-    },
+    // estado:{
+    //     type: DataTypes.INTEGER,
+    //     allowNull: false,
+    //     defaultValue: 0
+    // },
 }, {
     timestamps: false,
     tableName: "Transportista"
