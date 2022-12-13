@@ -11,7 +11,7 @@ const E_Trasportista = sequelize.define('E_Trasportista', {
         type: DataTypes.STRING(50),
         allowNull: false,
     },
-    lincencia_policia:{
+    licencia_policia:{
         type: DataTypes.STRING(50),
         allowNull: false,
     },

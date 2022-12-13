@@ -24,6 +24,9 @@ app.get('/api', (req, res) => {
 });
 
 app.use('/api/v1/empresa-productora', require("./src/auth/routes/eProductora.routes"));
+app.use('/api/v1/transportista', require("./src/auth/routes/transportista.routes"));
+app.use('/api/v1/empresa-destinatario', require("./src/auth/routes/eDestinatario.routes"));
+app.use('/api/v1/empresa-transportista', require("./src/auth/routes/eTransportista.routes"));
 
 /* -------------------------------------------------------------------------- */
 /*                        Manejo de errores y servidor                        */
@@ -35,7 +38,7 @@ app.use(function (req, res, next) {
 app.listen(port, async () => {
     try {
         // await sequelize.authenticate();
-        // sequelize.sync({force: true})
+        sequelize.sync({alter: true})
         console.log(`Application is listening at port ${port}`);
     } catch (err) {
         console.error(err)
