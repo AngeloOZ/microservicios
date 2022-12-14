@@ -43,6 +43,16 @@ Transportista.belongsTo(Usuario, {
     targetKey: "id_usuario"
 });
 
+E_Trasportista.hasMany(Transportista, {
+    foreignKey: "id_etrasportista",
+    sourceKey: "id_etrasportista",
+});
+Transportista.belongsTo(E_Trasportista,{
+    foreignKey: "id_etrasportista",
+    targetKey: "id_etrasportista",
+});
+
+
 /* Relacion uno a uno Usuario => E_Destinataria */
 Usuario.hasOne(E_Destinataria, {
     foreignKey: "id_usuario",

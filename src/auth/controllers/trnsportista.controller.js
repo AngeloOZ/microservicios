@@ -1,4 +1,5 @@
 const { request, response } = require('express');
+const { passwordHash } = require('../../../helpers/bcrypt');
 const { printToJson } = require('../../../helpers/printToJson');
 const Transportista = require('../../../models/Transportista');
 const Usuario = require('../../../models/Usuario');
@@ -29,7 +30,7 @@ async function registrar(req = request, res = response) {
 
         const usuarioBase = await Usuario.create({
             usuario,
-            contrasenia,
+            contrasenia: await passwordHash(contrasenia),
             correo,
             nombre,
             foto_url,
@@ -69,8 +70,8 @@ async function actualizar(req = request, res = response) {
         usuarioBase.estado = estado;
         usuarioBase.id_tipo = id_tipo;
         if (contrasenia && contrasenia != "") {
-            // Encriptar contraseña
-            usuarioBase.contrasenia = contrasenia;
+            pwdTemp = await passwordHash(contrasenia);
+            usuarioBase.contrasenia = pwdTemp;
         }
 
         await usuarioBase.save();

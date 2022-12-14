@@ -1,4 +1,5 @@
 const { request, response } = require('express');
+const { passwordHash } = require('../../../helpers/bcrypt');
 const { printToJson } = require('../../../helpers/printToJson');
 const E_Destinataria = require('../../../models/E_Destinataria');
 const Usuario = require('../../../models/Usuario');
@@ -12,7 +13,6 @@ async function mostrar(req = request, res = response) {
     }
 }
 
-
 async function mostrarPorCampos(req = request, res = response) {
     try {
         const { parameter, value } = req.params;
@@ -23,14 +23,13 @@ async function mostrarPorCampos(req = request, res = response) {
     }
 }
 
-
 async function registrar(req = request, res = response) {
     try {
         const { usuario, contrasenia, correo, nombre, foto_url, telefono, domicilio, licencia_ambiental, estado, id_tipo, tipo_empresa } = req.body;
 
         const usuarioBase = await Usuario.create({
             usuario,
-            contrasenia,
+            contrasenia: await passwordHash(contrasenia),
             correo,
             nombre,
             foto_url,

@@ -27,6 +27,7 @@ app.use('/api/v1/empresa-productora', require("./src/auth/routes/eProductora.rou
 app.use('/api/v1/transportista', require("./src/auth/routes/transportista.routes"));
 app.use('/api/v1/empresa-destinatario', require("./src/auth/routes/eDestinatario.routes"));
 app.use('/api/v1/empresa-transportista', require("./src/auth/routes/eTransportista.routes"));
+app.use('/api/v1/auth', require("./src/auth/routes/auth.routes"));
 
 /* -------------------------------------------------------------------------- */
 /*                        Manejo de errores y servidor                        */
