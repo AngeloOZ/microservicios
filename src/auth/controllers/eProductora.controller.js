@@ -5,7 +5,7 @@ const E_Productor = require('../../../models/E_Productor');
 const Usuario = require('../../../models/Usuario');
 
 
-async function obtenerEProductoras(req = request, res = response) {
+async function mostrar(req = request, res = response) {
     try {
         const usuarios = await E_Productor.findAll({ include: Usuario });
         res.status(200).json(usuarios);
@@ -14,7 +14,7 @@ async function obtenerEProductoras(req = request, res = response) {
     }
 }
 
-async function obtenerEProductorPorAtributo(req = request, res = response) {
+async function mostrarPorCampos(req = request, res = response) {
     try {
         const { parameter, value } = req.params;
         const usuario = await E_Productor.findOne({ where: { [parameter]: value }, include: Usuario });
@@ -24,7 +24,7 @@ async function obtenerEProductorPorAtributo(req = request, res = response) {
     }
 }
 
-async function registrarEProductora(req = request, res = response) {
+async function registrar(req = request, res = response) {
     try {
         const { usuario, contrasenia, correo, nombre, foto_url, telefono, domicilio, licencia_ambiental, estado, id_tipo, ruc } = req.body;
 
@@ -52,4 +52,36 @@ async function registrarEProductora(req = request, res = response) {
     }
 }
 
-module.exports = { obtenerEProductoras, obtenerEProductorPorAtributo, registrarEProductora }
+async function actualizar(req = request, res = response) {
+    try {
+        const { usuario, contrasenia, correo, nombre, foto_url, telefono, domicilio, licencia_ambiental, estado, id_tipo, ruc, id_usuario, id_edestinataria } = req.body;
+
+        const usuarioBase = await Usuario.findByPk(id_usuario);
+
+        usuarioBase.usuario = usuario;
+        usuarioBase.correo = correo;
+        usuarioBase.nombre = nombre;
+        usuarioBase.foto_url = foto_url;
+        usuarioBase.telefono = telefono;
+        usuarioBase.domicilio = domicilio;
+        usuarioBase.licencia_ambiental = licencia_ambiental;
+        usuarioBase.estado = estado;
+        usuarioBase.id_tipo = id_tipo;
+        if (contrasenia && contrasenia != "") {
+            pwdTemp = await passwordHash(contrasenia);
+            usuarioBase.contrasenia = pwdTemp;
+        }
+
+        await usuarioBase.save();
+
+        const usuarioEProductor = await E_Productor.findByPk(id_edestinataria);
+        usuarioEProductor.ruc = ruc;
+        await usuarioEProductor.save();
+
+        return res.status(200).json(usuarioEProductor)
+    } catch (error) {
+        res.status(500).json(printToJson(500, error.message, error))
+    }
+}
+
+module.exports = { mostrar, mostrarPorCampos, registrar, actualizar }

@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const transportistaCtrl = require("../controllers/trnsportista.controller");
+const transportistaCtrl = require("../controllers/transportista.controller");
 
 const router = Router();
 

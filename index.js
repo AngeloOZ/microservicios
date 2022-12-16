@@ -23,11 +23,17 @@ app.get('/api', (req, res) => {
     res.status(404).json({ status: 404, message: "Bad request" });
 });
 
+/* Microservicios de Auth */
+app.use('/api/v1/auth', require("./src/auth/routes/auth.routes"));
 app.use('/api/v1/empresa-productora', require("./src/auth/routes/eProductora.routes"));
-app.use('/api/v1/transportista', require("./src/auth/routes/transportista.routes"));
 app.use('/api/v1/empresa-destinatario', require("./src/auth/routes/eDestinatario.routes"));
 app.use('/api/v1/empresa-transportista', require("./src/auth/routes/eTransportista.routes"));
-app.use('/api/v1/auth', require("./src/auth/routes/auth.routes"));
+app.use('/api/v1/usuario-transportista', require("./src/auth/routes/transportista.routes"));
+
+/* Microservicios de Auth */
+app.use('/api/v1/instalaciones', require("./src/Productor/routes/instalaciones.routes"));
+
+
 
 /* -------------------------------------------------------------------------- */
 /*                        Manejo de errores y servidor                        */
@@ -39,7 +45,7 @@ app.use(function (req, res, next) {
 app.listen(port, async () => {
     try {
         // await sequelize.authenticate();
-        sequelize.sync({alter: true})
+        // sequelize.sync({alter: true})
         console.log(`Application is listening at port ${port}`);
     } catch (err) {
         console.error(err)
