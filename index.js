@@ -30,8 +30,9 @@ app.use('/api/v1/empresa-destinatario', require("./src/auth/routes/eDestinatario
 app.use('/api/v1/empresa-transportista', require("./src/auth/routes/eTransportista.routes"));
 app.use('/api/v1/usuario-transportista', require("./src/auth/routes/transportista.routes"));
 
-/* Microservicios de Auth */
+/* Microservicios de Productor */
 app.use('/api/v1/instalaciones', require("./src/Productor/routes/instalaciones.routes"));
+app.use('/api/v1/aee', require("./src/Productor/routes/aee.routes"));
 
 
 
