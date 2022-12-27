@@ -26,23 +26,17 @@ async function mostrarPorCampos(req = request, res = response) {
 
 async function registrar(req = request, res = response) {
     try {
-        const { usuario, contrasenia, correo, nombre, foto_url, telefono, domicilio, licencia_ambiental, estado, id_tipo, ruc } = req.body;
+        const { usuario, contrasenia, correo, identificacion, id_tipo } = req.body;
 
         const usuarioBase = await Usuario.create({
             usuario,
             contrasenia: await passwordHash(contrasenia),
             correo,
-            nombre,
-            foto_url,
-            telefono,
-            domicilio,
-            licencia_ambiental,
-            estado,
+            identificacion,
             id_tipo
         });
 
         const usuarioEproductor = await E_Productor.create({
-            ruc,
             id_usuario: usuarioBase.dataValues.id_usuario
         })
 

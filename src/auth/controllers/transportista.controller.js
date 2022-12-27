@@ -26,26 +26,17 @@ async function mostrarPorCampos(req = request, res = response) {
 
 async function registrar(req = request, res = response) {
     try {
-        const { usuario, contrasenia, correo, nombre, foto_url, telefono, domicilio, licencia_ambiental, estado, id_tipo, cargo, tipo_auto, placa, id_etrasportista } = req.body;
+        const { usuario, contrasenia, correo, identificacion, id_tipo } = req.body;
 
         const usuarioBase = await Usuario.create({
             usuario,
             contrasenia: await passwordHash(contrasenia),
             correo,
-            nombre,
-            foto_url,
-            telefono,
-            domicilio,
-            licencia_ambiental,
-            estado,
+            identificacion,
             id_tipo
         });
 
         const usuarioTransportista = await Transportista.create({
-            cargo,
-            tipo_auto,
-            placa,
-            id_etrasportista,
             id_usuario: usuarioBase.dataValues.id_usuario
         })
 
@@ -81,7 +72,7 @@ async function actualizar(req = request, res = response) {
         usuarioTransportista.cargo = cargo;
         usuarioTransportista.tipo_auto = tipo_auto;
         usuarioTransportista.placa = placa;
-        
+
         await usuarioTransportista.save();
 
         return res.status(200).json(usuarioTransportista)
