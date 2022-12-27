@@ -1,12 +1,13 @@
 const { Router } = require('express');
 const transportistaCtrl = require("../controllers/transportista.controller");
+const validateToken = require('../../../middlewares/validateToken');
 
 const router = Router();
 
 
-router.get('/', transportistaCtrl.mostrar);
-router.get('/:parameter/:value', transportistaCtrl.mostrarPorCampos);
-router.post('/', transportistaCtrl.registrar);
-router.put('/', transportistaCtrl.actualizar);
+router.get('/', validateToken, transportistaCtrl.mostrar);
+router.get('/:parameter/:value', validateToken, transportistaCtrl.mostrarPorCampos);
+router.post('/', validateToken, transportistaCtrl.registrar);
+router.put('/', validateToken, transportistaCtrl.actualizar);
 
 module.exports = router;

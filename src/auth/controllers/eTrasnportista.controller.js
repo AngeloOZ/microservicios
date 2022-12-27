@@ -3,10 +3,21 @@ const { passwordHash } = require('../../../helpers/bcrypt');
 const { printToJson } = require('../../../helpers/printToJson');
 const E_Trasportista = require('../../../models/E_Trasportista');
 const Usuario = require('../../../models/Usuario');
+const Transportista = require('../../../models/Transportista');
 
 async function mostrar(req = request, res = response) {
     try {
         const usuarios = await E_Trasportista.findAll({ include: Usuario });
+        res.status(200).json(usuarios);
+    } catch (error) {
+        res.status(500).json(printToJson(500, error.message, error));
+    }
+}
+
+async function mostrarPorIdEmpresaTransportista(req = request, res = response) {
+    try {
+        const token = req.currentToken;
+        const usuarios = await Transportista.findAll({ include: Usuario, where: { id_etrasportista: token.id_etrasportista } });
         res.status(200).json(usuarios);
     } catch (error) {
         res.status(500).json(printToJson(500, error.message, error));
@@ -78,4 +89,4 @@ async function actualizar(req = request, res = response) {
     }
 }
 
-module.exports = { mostrar, mostrarPorCampos, registrar, actualizar }
+module.exports = { mostrar, mostrarPorIdEmpresaTransportista, mostrarPorCampos, registrar, actualizar }

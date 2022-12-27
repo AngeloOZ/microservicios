@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors')
 const cookieParser = require('cookie-parser');
 const sequelize = require('./models/database');
+const validateToken = require('./middlewares/validateToken');
 require("dotenv").config();
 require("./models/init_relacions");
 // require("./models/inicializar_datos");
@@ -31,8 +32,8 @@ app.use('/api/v1/empresa-transportista', require("./src/auth/routes/eTransportis
 app.use('/api/v1/usuario-transportista', require("./src/auth/routes/transportista.routes"));
 
 /* Microservicios de Productor */
-app.use('/api/v1/instalaciones', require("./src/Productor/routes/instalaciones.routes"));
-app.use('/api/v1/aee', require("./src/Productor/routes/aee.routes"));
+app.use('/api/v1/instalaciones', validateToken, require("./src/Productor/routes/instalaciones.routes"));
+app.use('/api/v1/aee', validateToken, require("./src/Productor/routes/aee.routes"));
 
 
 
@@ -46,7 +47,7 @@ app.use(function (req, res, next) {
 app.listen(port, async () => {
     try {
         // await sequelize.authenticate();
-        sequelize.sync({alter: true})
+        // sequelize.sync({ alter: true })
         console.log(`Application is listening at port ${port}`);
     } catch (err) {
         console.error(err)

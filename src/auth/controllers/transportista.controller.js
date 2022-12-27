@@ -26,6 +26,7 @@ async function mostrarPorCampos(req = request, res = response) {
 
 async function registrar(req = request, res = response) {
     try {
+        const token = req.currentToken;
         const { usuario, contrasenia, correo, identificacion, id_tipo } = req.body;
 
         const usuarioBase = await Usuario.create({
@@ -37,7 +38,8 @@ async function registrar(req = request, res = response) {
         });
 
         const usuarioTransportista = await Transportista.create({
-            id_usuario: usuarioBase.dataValues.id_usuario
+            id_usuario: usuarioBase.dataValues.id_usuario,
+            id_etrasportista: token.id_etrasportista
         })
 
         return res.status(200).json(usuarioTransportista)
