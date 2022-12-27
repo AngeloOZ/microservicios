@@ -9,7 +9,7 @@ const E_Productor = sequelize.define('E_Productora', {
     },
     ruc:{
         type: DataTypes.STRING(13),
-        allowNull: false,
+        allowNull: true,
     },
 }, {
     timestamps: false,
