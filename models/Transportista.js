@@ -12,21 +12,16 @@ const Transportista = sequelize.define('Transportista', {
     },
     cargo:{
         type: DataTypes.STRING(100),
-        allowNull: false
+        allowNull: true
     },
     tipo_auto:{
         type: DataTypes.STRING(100),
-        allowNull: false
+        allowNull: true
     },
     placa:{
         type: DataTypes.STRING(100),
-        allowNull: false
+        allowNull: true
     },
-    // estado:{
-    //     type: DataTypes.INTEGER,
-    //     allowNull: false,
-    //     defaultValue: 0
-    // },
 }, {
     timestamps: false,
     tableName: "Transportista"

@@ -36,12 +36,12 @@ const registrarProductorValid = [
         .notEmpty()
         .withMessage("nombre must not be empty")
         .trim(),
-    check('foto_url')
+    check('identificacion')
         .exists()
-        .withMessage("foto_url is required")
+        .withMessage("identificacion is required")
         .bail()
         .notEmpty()
-        .withMessage("foto_url must not be empty")
+        .withMessage("identificacion must not be empty")
         .trim(),
     (req, res, next) => validateResult(req, res, next)
 ];

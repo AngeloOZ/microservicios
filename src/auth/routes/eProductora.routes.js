@@ -7,7 +7,7 @@ const router = Router();
 
 router.get('/', eProductorCtr.mostrar);
 router.get('/:parameter/:value', eProductorCtr.mostrarPorCampos);
-router.post('/', registrarProductorValid, eProductorCtr.registrar);
-router.put('/', registrarProductorValid, eProductorCtr.actualizar);
+router.post('/', eProductorCtr.registrar);
+router.put('/', eProductorCtr.actualizar);
 
 module.exports = router;

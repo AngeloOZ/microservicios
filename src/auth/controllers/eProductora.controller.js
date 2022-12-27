@@ -54,7 +54,7 @@ async function registrar(req = request, res = response) {
 
 async function actualizar(req = request, res = response) {
     try {
-        const { usuario, contrasenia, correo, nombre, foto_url, telefono, domicilio, licencia_ambiental, estado, id_tipo, ruc, id_usuario, id_edestinataria } = req.body;
+        const { usuario, contrasenia, correo, nombre, foto_url, telefono, domicilio, licencia_ambiental, estado, id_tipo, ruc, id_usuario, id_eproductor } = req.body;
 
         const usuarioBase = await Usuario.findByPk(id_usuario);
 
@@ -74,7 +74,7 @@ async function actualizar(req = request, res = response) {
 
         await usuarioBase.save();
 
-        const usuarioEProductor = await E_Productor.findByPk(id_edestinataria);
+        const usuarioEProductor = await E_Productor.findByPk(id_eproductor);
         usuarioEProductor.ruc = ruc;
         await usuarioEProductor.save();
 

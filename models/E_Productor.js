@@ -7,18 +7,10 @@ const E_Productor = sequelize.define('E_Productora', {
         primaryKey: true,
         autoIncrement: true,
     },
-    // id_usuario:{
-    //     type: DataTypes.INTEGER,
-    // },
     ruc:{
         type: DataTypes.STRING(13),
         allowNull: false,
     },
-    // estado: {
-    //     type: DataTypes.INTEGER,
-    //     allowNull: false,
-    //     defaultValue: 0,
-    // }
 }, {
     timestamps: false,
     tableName: "E_Productora"
