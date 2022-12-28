@@ -28,7 +28,7 @@ const Usuario = sequelize.define('Usuario', {
         allowNull: true,
     },
     foto_url: {
-        type: DataTypes.TEXT,
+        type: DataTypes.TEXT('long'),
         allowNull: true,
     },
     telefono: {
