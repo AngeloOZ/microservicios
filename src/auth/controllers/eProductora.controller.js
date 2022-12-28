@@ -78,4 +78,6 @@ async function actualizar(req = request, res = response) {
     }
 }
 
+
+
 module.exports = { mostrar, mostrarPorCampos, registrar, actualizar }
