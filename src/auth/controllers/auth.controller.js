@@ -17,7 +17,7 @@ async function obtenerUsuario(usuarioBase) {
                 where: { id_usuario: usuarioBase.id_usuario },
                 include: {
                     model: Usuario,
-                    attributes: { exclude: ['contrasenia', 'id_usuario'] }
+                    attributes: { exclude: ['contrasenia'] }
                 }
             });
             const auxUserB = auxUser.dataValues.Usuario.dataValues;
@@ -30,7 +30,7 @@ async function obtenerUsuario(usuarioBase) {
                 where: { id_usuario: usuarioBase.id_usuario },
                 include: {
                     model: Usuario,
-                    attributes: { exclude: ['contrasenia', 'id_usuario'] }
+                    attributes: { exclude: ['contrasenia'] }
                 }
             });
             const auxUserB = auxUser.dataValues.Usuario.dataValues;
@@ -43,7 +43,7 @@ async function obtenerUsuario(usuarioBase) {
                 where: { id_usuario: usuarioBase.id_usuario },
                 include: {
                     model: Usuario,
-                    attributes: { exclude: ['contrasenia', 'id_usuario'] }
+                    attributes: { exclude: ['contrasenia'] }
                 }
             });
             const auxUserB = auxUser.dataValues.Usuario.dataValues;
@@ -56,7 +56,7 @@ async function obtenerUsuario(usuarioBase) {
                 where: { id_usuario: usuarioBase.id_usuario },
                 include: {
                     model: Usuario,
-                    attributes: { exclude: ['contrasenia', 'id_usuario'] }
+                    attributes: { exclude: ['contrasenia'] }
                 }
             });
             const auxUserB = auxUser.dataValues.Usuario.dataValues;
@@ -68,6 +68,24 @@ async function obtenerUsuario(usuarioBase) {
     return usuarioLogged;
 }
 
+function obtenerPayloadToken(payload) {
+    const userBase = {
+        "id_usuario": payload.usuario.id_usuario,
+        "usuario": payload.usuario.usuario,
+        "correo": payload.usuario.correo,
+        "identificacion": payload.usuario.identificacion,
+        "nombre": payload.usuario.nombre,
+        "telefono": payload.usuario.telefono,
+        "domicilio": payload.usuario.domicilio,
+        "licencia_ambiental": payload.usuario.licencia_ambiental,
+        "estado": payload.usuario.estado,
+        "id_tipo": payload.usuario.id_tipo,
+    }
+
+    const newPayload = { ...payload, usuario: userBase }
+    return newPayload;
+}
+
 async function login(req = request, res = response) {
     try {
         const { username, password } = req.body;
@@ -76,10 +94,11 @@ async function login(req = request, res = response) {
         if (requestUser) {
             const match = await passwordVerify(password, requestUser.contrasenia);
             if (requestUser.usuario == username && match) {
-                const payloadToken = await obtenerUsuario(requestUser.dataValues);
+                const user = await obtenerUsuario(requestUser.dataValues);
+                const payloadToken = obtenerPayloadToken({ ...user });
                 const token = singToken(payloadToken);
-                payloadToken.token = token;
-                return res.status(200).json(printToJson(200, "success", payloadToken));
+                user.token = token;
+                return res.status(200).json(printToJson(200, "success", user));
             }
         }
         return res.status(404).json(printToJson(404, "El usuario o contrasenia no son correctos"));
