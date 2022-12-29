@@ -113,7 +113,11 @@ async function actualizarUsuarioBase(req = request, res = response) {
         const { id_usuario, foto_url, identificacion, nombre, correo, contrasenia } = req.body;
 
         const usuarioBase = await Usuario.findByPk(id_usuario);
-        usuarioBase.foto_url = foto_url;
+
+        if (foto_url) {
+            usuarioBase.foto_url = foto_url;
+        }
+
         usuarioBase.identificacion = identificacion;
         usuarioBase.nombre = nombre;
         usuarioBase.correo = correo;
@@ -124,10 +128,12 @@ async function actualizarUsuarioBase(req = request, res = response) {
 
         await usuarioBase.save();
 
-        const payloadToken = await obtenerUsuario(usuarioBase.dataValues);
+        const user = await obtenerUsuario(usuarioBase.dataValues);
+        const payloadToken = obtenerPayloadToken({ ...user });
         const token = singToken(payloadToken);
-        payloadToken.token = token;
-        return res.status(200).json(printToJson(200, "success", payloadToken));
+        user.token = token;
+        return res.status(200).json(user);
+
     } catch (error) {
         res.status(500).json(printToJson(500, error.message, error))
     }
