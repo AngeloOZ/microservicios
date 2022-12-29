@@ -114,13 +114,14 @@ async function actualizarUsuarioBase(req = request, res = response) {
 
         const usuarioBase = await Usuario.findByPk(id_usuario);
 
-        if (foto_url) {
-            usuarioBase.foto_url = foto_url;
-        }
-
         usuarioBase.identificacion = identificacion;
         usuarioBase.nombre = nombre;
         usuarioBase.correo = correo;
+
+        if (foto_url) {
+            usuarioBase.foto_url = foto_url;
+        }
+        
         if (contrasenia && contrasenia != "") {
             pwdTemp = await passwordHash(contrasenia);
             usuarioBase.contrasenia = pwdTemp;
