@@ -32,8 +32,8 @@ app.use('/api/v1/empresa-transportista', require("./src/auth/routes/eTransportis
 app.use('/api/v1/usuario-transportista', require("./src/auth/routes/transportista.routes"));
 
 /* Microservicios de Productor */
-app.use('/api/v1/instalaciones', validateToken, require("./src/Productor/routes/instalaciones.routes"));
-app.use('/api/v1/aee', validateToken, require("./src/Productor/routes/aee.routes"));
+app.use('/api/v1/instalaciones', require("./src/Productor/routes/instalaciones.routes"));
+app.use('/api/v1/aee', require("./src/Productor/routes/aee.routes"));
 
 
 

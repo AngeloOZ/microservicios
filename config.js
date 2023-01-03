@@ -25,4 +25,7 @@ module.exports = {
         database: process.env.MYSQL_DB_LOCAL || 'recicick',
         port: process.env.MYSQL_PORT_LOCAL || '3306',
     },
+    microservicio: {
+        auth: "http://localhost:4010/api/v1/"
+    }
 }

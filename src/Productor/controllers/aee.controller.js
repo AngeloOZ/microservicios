@@ -18,8 +18,20 @@ async function mostrar(req = request, res = response) {
 async function mostrarPorCampos(req = request, res = response) {
     try {
         const { parameter, value } = req.params;
-        const usuario = await AEE.findOne({ where: { [parameter]: value }, include: Instalaciones });
-        res.status(200).json(usuario);
+        const aees = await AEE.findAll({ where: { [parameter]: value }, include: Instalaciones });
+        res.status(200).json(aees);
+    } catch (error) {
+        res.status(500).json(printToJson(500, error.message, error))
+    }
+}
+
+async function mostrarAEEporInstalacion(req = request, res = response) {
+    try {
+        const { id_instalacion } = req.params;
+        console.log(id_instalacion);
+        return
+        const aees = await AEE.findAll({ where: { id_instalacion } });
+        return res.status(200).json(aees);
     } catch (error) {
         res.status(500).json(printToJson(500, error.message, error))
     }
@@ -75,4 +87,4 @@ async function actualizar2(req = request, res = response) {
 }
 
 
-module.exports = { mostrar, mostrarPorCampos, registrar, actualizar, actualizar2 }
+module.exports = { mostrar, mostrarPorCampos, mostrarAEEporInstalacion, registrar, actualizar, actualizar2 }

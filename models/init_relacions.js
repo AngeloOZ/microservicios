@@ -65,11 +65,17 @@ E_Destinataria.belongsTo(Usuario, {
 
 /* Relacion uno a muchos E_Productor => Instalacion */
 E_Productor.hasMany(Instalaciones, {
-    foreignKey: "id_eproductor",
+    foreignKey: {
+        name: "id_eproductor",
+        allowNull: false
+    },
     sourceKey: "id_eproductor",
 });
 Instalaciones.belongsTo(E_Productor,{
-    foreignKey: "id_eproductor",
+    foreignKey: {
+        name: "id_eproductor",
+        allowNull: false
+    },
     targetKey: "id_eproductor",
 });
 

@@ -6,8 +6,14 @@ const Instalaciones = require('../../../models/Instalaciones');
 
 async function mostrar(req = request, res = response) {
     try {
-        const usuarios = await Instalaciones.findAll({ include: E_Productor });
-        res.status(200).json(usuarios);
+        const { id_eproductor } = req.currentToken;
+
+        const intalaciones = await Instalaciones.findAll({ where: { id_eproductor }, include: E_Productor });
+        if (intalaciones.length != 0) {
+            return res.status(200).json(intalaciones);
+        } else {
+            return res.status(404).json(printToJson(404, "No se ha encontrado instalaciones"));
+        }
     } catch (error) {
         res.status(500).json(printToJson(500, error.message, error));
     }
@@ -15,9 +21,15 @@ async function mostrar(req = request, res = response) {
 
 async function mostrarPorCampos(req = request, res = response) {
     try {
+        const { id_eproductor } = req.currentToken;
         const { parameter, value } = req.params;
-        const usuario = await Instalaciones.findOne({ where: { [parameter]: value }, include: E_Productor });
-        res.status(200).json(usuario);
+        const intalaciones = await Instalaciones.findAll({ where: { [parameter]: value, id_eproductor }, include: E_Productor });
+
+        if (intalaciones.length != 0) {
+            return res.status(200).json(intalaciones);
+        } else {
+            return res.status(404).json(printToJson(404, "No se ha encontrado instalaciones"));
+        }
     } catch (error) {
         res.status(500).json(printToJson(500, error.message, error))
     }
@@ -25,9 +37,20 @@ async function mostrarPorCampos(req = request, res = response) {
 
 async function registrar(req = request, res = response) {
     try {
-        const { nombre_instalacion, domicilio, provincia, canton, parroquia, n_onu, telefono, estado, id_eproductor } = req.body;
+        const payloadToken = req.currentToken;
+        const { nombre_instalacion, domicilio, provincia, canton, parroquia, n_onu, telefono, estado } = req.body;
 
-        const instalacion = await Instalaciones.create({ nombre_instalacion, domicilio, provincia, canton, parroquia, n_onu, telefono, estado, id_eproductor });
+        const instalacion = await Instalaciones.create({
+            nombre_instalacion,
+            domicilio,
+            provincia,
+            canton,
+            parroquia,
+            n_onu,
+            telefono,
+            estado,
+            id_eproductor: payloadToken.id_eproductor
+        });
 
         return res.status(200).json(instalacion);
     } catch (error) {
@@ -73,4 +96,4 @@ async function actualizar2(req = request, res = response) {
 }
 
 
-module.exports = { mostrar, mostrarPorCampos, registrar, actualizar, actualizar2}
+module.exports = { mostrar, mostrarPorCampos, registrar, actualizar, actualizar2 }

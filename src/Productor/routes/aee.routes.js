@@ -6,6 +6,7 @@ const router = Router();
 
 router.get('/', aeeCtr.mostrar);
 router.get('/:parameter/:value', aeeCtr.mostrarPorCampos);
+router.get('/instalacion/:id_instalacion', aeeCtr.mostrarAEEporInstalacion);
 router.post('/', aeeCtr.registrar);
 router.put('/', aeeCtr.actualizar2);
 

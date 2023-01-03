@@ -27,7 +27,7 @@ async function mostrarPorIdEmpresaTransportista(req = request, res = response) {
 async function mostrarPorCampos(req = request, res = response) {
     try {
         const { parameter, value } = req.params;
-        const usuario = await E_Trasportista.findOne({ where: { [parameter]: value }, include: Usuario });
+        const usuario = await E_Trasportista.findAll({ where: { [parameter]: value }, include: Usuario });
         res.status(200).json(usuario);
     } catch (error) {
         res.status(500).json(printToJson(500, error.message, error))

@@ -9,6 +9,7 @@ const validateToken = async (req = request, res = response, next) => {
          const token = authorization.substring(7).trim();
          const payloadToken = verifyToken(token);
          req.currentToken = payloadToken;
+         req.token = token;
          return next();
       }
       return res.status(401).json(printToJson(401, "Not authorized"))

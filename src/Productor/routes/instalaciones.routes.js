@@ -1,12 +1,13 @@
 const { Router } = require('express');
 const instalacionCtr = require('../controllers/instalaciones.controller');
+const validateToken = require('../../../middlewares/validateToken');
 
 const router = Router();
 
 
-router.get('/', instalacionCtr.mostrar);
-router.get('/:parameter/:value', instalacionCtr.mostrarPorCampos);
-router.post('/', instalacionCtr.registrar);
-router.put('/', instalacionCtr.actualizar2);
+router.get('/', validateToken, instalacionCtr.mostrar);
+router.get('/:parameter/:value', validateToken, instalacionCtr.mostrarPorCampos);
+router.post('/', validateToken, instalacionCtr.registrar);
+router.put('/', validateToken, instalacionCtr.actualizar2);
 
 module.exports = router;
