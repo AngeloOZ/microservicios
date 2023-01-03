@@ -1,10 +1,7 @@
 const { request, response } = require('express');
 const { printToJson } = require('../../../helpers/printToJson');
-const E_Productor = require('../../../models/E_Productor');
 const Instalaciones = require('../../../models/Instalaciones');
 const AEE = require('../../../models/AEE');
-AEE
-
 
 async function mostrar(req = request, res = response) {
     try {
@@ -25,17 +22,32 @@ async function mostrarPorCampos(req = request, res = response) {
     }
 }
 
-async function mostrarAEEporInstalacion(req = request, res = response) {
+
+async function mostrarAEEInstalacion(req = request, res = response) {
     try {
-        const { id_instalacion } = req.params;
-        console.log(id_instalacion);
-        return
-        const aees = await AEE.findAll({ where: { id_instalacion } });
-        return res.status(200).json(aees);
+        const { id } = req.params;
+        const aees = await AEE.findAll({ where: { "id_instalacion": id } });
+        res.status(200).json(aees);
     } catch (error) {
         res.status(500).json(printToJson(500, error.message, error))
     }
 }
+
+async function mostrarAEEProductor(req = request, res = response) {
+    try {
+        const payload = req.currentToken;
+        const instalaciones = await Instalaciones.findAll({ where: { "id_eproductor": payload.id_eproductor } });
+        let listadoAEES = [];
+        for (const instalacion of instalaciones) {
+            const aees = await AEE.findAll({ where: { "id_instalacion": instalacion.id_instalacion } });
+            listadoAEES = [...listadoAEES, ...aees];
+        }
+        return res.json(listadoAEES);
+    } catch (error) {
+        res.status(500).json(printToJson(500, error.message, error))
+    }
+}
+
 
 async function registrar(req = request, res = response) {
     try {
@@ -87,4 +99,4 @@ async function actualizar2(req = request, res = response) {
 }
 
 
-module.exports = { mostrar, mostrarPorCampos, mostrarAEEporInstalacion, registrar, actualizar, actualizar2 }
+module.exports = { mostrar, mostrarPorCampos, mostrarAEEInstalacion, mostrarAEEProductor, registrar, actualizar, actualizar2 }
