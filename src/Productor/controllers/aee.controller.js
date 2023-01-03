@@ -5,7 +5,8 @@ const AEE = require('../../../models/AEE');
 
 async function mostrar(req = request, res = response) {
     try {
-        const usuarios = await AEE.findAll({ include: { all: true, nested: true } });
+        const usuarios = await AEE.findAll({ include: { all: true } });
+        // const usuarios = await AEE.findAll({ include: { all: true, nested: true } });
         res.status(200).json(usuarios);
     } catch (error) {
         res.status(500).json(printToJson(500, error.message, error));
