@@ -43,10 +43,6 @@ const Manifiesto_Destinatario = sequelize.define('Manifiesto_Destinatario', {
         type: DataTypes.DATE,
         allowNull: false,
     },
-    fase: {
-        type: DataTypes.STRING(30),
-        allowNull: false,
-    },
 }, {
     timestamps: false,
     tableName: "Manifiesto_Destinatario"

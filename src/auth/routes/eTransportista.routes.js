@@ -7,7 +7,7 @@ const router = Router();
 
 router.get('/', validateToken, etransportistaCtrl.mostrar);
 router.get('/listado-transportistas', validateToken, etransportistaCtrl.mostrarPorIdEmpresaTransportista);
-router.get('/:parameter/:value', validateToken, etransportistaCtrl.mostrarPorCampos);
+router.get('/campo/:parameter/:value', validateToken, etransportistaCtrl.mostrarPorCampos);
 router.post('/', etransportistaCtrl.registrar);
 router.put('/', validateToken, etransportistaCtrl.actualizar);
 

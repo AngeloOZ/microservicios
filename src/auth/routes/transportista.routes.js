@@ -6,7 +6,7 @@ const router = Router();
 
 
 router.get('/', validateToken, transportistaCtrl.mostrar);
-router.get('/:parameter/:value', validateToken, transportistaCtrl.mostrarPorCampos);
+router.get('/campo/:parameter/:value', validateToken, transportistaCtrl.mostrarPorCampos);
 router.post('/', validateToken, transportistaCtrl.registrar);
 router.put('/', validateToken, transportistaCtrl.actualizar);
 
