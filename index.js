@@ -34,6 +34,7 @@ app.use('/api/v1/usuario-transportista', require("./src/auth/routes/transportist
 /* Microservicios de Productor */
 app.use('/api/v1/instalaciones', require("./src/Productor/routes/instalaciones.routes"));
 app.use('/api/v1/aee', require("./src/Productor/routes/aee.routes"));
+app.use('/api/v1/manifiesto-p1', require("./src/Productor/routes/manifiesto.routes"));
 
 
 

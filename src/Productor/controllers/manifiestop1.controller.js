@@ -7,6 +7,7 @@ const Manifiesto = require('../../../models/Manifiesto');
 const UsuarioManifiesto = require('../../../models/UsuarioManifiesto');
 const { default: axios } = require('axios');
 const config = require('../../../config');
+const sequelize = require('../../../models/database');
 
 
 async function mostrar(req = request, res = response) {
@@ -41,10 +42,25 @@ async function mostrarPorCampos(req = request, res = response) {
 }
 
 async function registrar(req = request, res = response) {
+    const transaction = await sequelize.transaction();
     try {
         const payloadToken = req.currentToken;
+        const token = req.token;
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
         const { n_registro, n_manifiesto, pagina, instrucciones_especiales, nombre_productor, cargo_productor, correo_productor, telefono_productor, numero_resolutivo, fecha_salida, id_edestinataria, id_etrasportista } = req.body;
+
+        const { data: [empDestinatario] } = await axios.get(`${config.microservicio.auth}empresa-destinatario/campo/id_edestinataria/${id_edestinataria}`);
+        if (!empDestinatario) {
+            await transaction.rollback();
+            return res.status(404).json(printToJson(404, `No existe almacenamiento con id: ${id_edestinataria}`));
+        }
+
+        const { data: [empTransportista] } = await axios.get(`${config.microservicio.auth}empresa-transportista/campo/id_etrasportista/${id_etrasportista}`);
+        if (!empTransportista) {
+            await transaction.rollback();
+            return res.status(404).json(printToJson(404, `No existe empresa transportista con id: ${id_edestinataria}`));
+        }
 
         const manifiestoProductor = await Manifiesto_Productor.create({
             n_registro,
@@ -70,22 +86,21 @@ async function registrar(req = request, res = response) {
             ManifiestoIdManifiesto: manifiestoBase.dataValues.id_manifiesto
         })
 
-        // consultar id_edestinataria
-        const res = await axios.get(`${config.microservicio.auth}`);
         await UsuarioManifiesto.create({
-            UsuarioIdUsuario: payloadToken.usuario.id_usuario,
+            UsuarioIdUsuario: empDestinatario.Usuario.id_usuario,
             ManifiestoIdManifiesto: manifiestoBase.dataValues.id_manifiesto
         })
 
-        // consultar id_etrasportista
         await UsuarioManifiesto.create({
-            UsuarioIdUsuario: payloadToken.usuario.id_usuario,
+            UsuarioIdUsuario: empTransportista.Usuario.id_usuario,
             ManifiestoIdManifiesto: manifiestoBase.dataValues.id_manifiesto
         })
 
-        return res.status(200).json(printToJson(200,));
+        await transaction.commit();
+        return res.status(201).json(printToJson(201, "Primera parte de manifiesto creada"));
     } catch (error) {
-        res.status(500).json(printToJson(500, error.message, error))
+        await transaction.rollback();
+        return res.status(500).json(printToJson(500, error.message, error))
     }
 }
 
