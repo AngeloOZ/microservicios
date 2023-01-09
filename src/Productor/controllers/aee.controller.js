@@ -5,7 +5,7 @@ const AEE = require('../../../models/AEE');
 
 async function mostrar(req = request, res = response) {
     try {
-        const usuarios = await AEE.findAll({ include: { all: true } });
+        const usuarios = await AEE.findAll({ include: { all: true }, where: { "estado": 1 } });
         // const usuarios = await AEE.findAll({ include: { all: true, nested: true } });
         res.status(200).json(usuarios);
     } catch (error) {
@@ -66,7 +66,7 @@ async function actualizar(req = request, res = response) {
     try {
         const { nombre, codigo, capacidad_contenedor, tipo_contenedor, cantidad, unidades, estado, id_instalacion, id_aee } = req.body;
 
-        const aee = await AEE.findByPk(id_instalacion);
+        const aee = await AEE.findByPk(id_aee);
 
         aee.nombre = nombre;
         aee.codigo = codigo;
@@ -99,5 +99,20 @@ async function actualizar2(req = request, res = response) {
     }
 }
 
+async function eliminar(req = request, res = response) {
+    try {
+        const { id } = req.params;
+        const aee = await AEE.findByPk(id);
+        if (aee) {
+            await aee.update({ estado: 0 });
+            return res.status(204).json(printToJson(204));
+        } else {
+            res.status(404).json(printToJson(404, `No se encontro AEE con id: ${req.params}`))
+        }
+    } catch (error) {
+        res.status(500).json(printToJson(500, error.message, error))
+    }
+}
 
-module.exports = { mostrar, mostrarPorCampos, mostrarAEEInstalacion, mostrarAEEProductor, registrar, actualizar, actualizar2 }
+
+module.exports = { mostrar, mostrarPorCampos, mostrarAEEInstalacion, mostrarAEEProductor, registrar, actualizar, actualizar2, eliminar }
