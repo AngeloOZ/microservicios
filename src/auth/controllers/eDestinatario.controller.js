@@ -1,23 +1,22 @@
 const { request, response } = require('express');
 const { passwordHash } = require('../../../helpers/bcrypt');
 const { printToJson } = require('../../../helpers/printToJson');
-const E_Productor = require('../../../models/E_Productor');
+const E_Destinataria = require('../../../models/E_Destinataria');
 const Usuario = require('../../../models/Usuario');
-
 
 async function mostrar(req = request, res = response) {
     try {
-        const usuarios = await E_Productor.findAll({ include: Usuario });
+        const usuarios = await E_Destinataria.findAll({ include: Usuario });
         res.status(200).json(usuarios);
     } catch (error) {
-        res.status(500).json(printToJson(500, error.message, error))
+        res.status(500).json(printToJson(500, error.message, error));
     }
 }
 
 async function mostrarPorCampos(req = request, res = response) {
     try {
         const { parameter, value } = req.params;
-        const usuario = await E_Productor.findAll({ where: { [parameter]: value }, include: Usuario });
+        const usuario = await E_Destinataria.findAll({ where: { [parameter]: value }, include: Usuario });
         res.status(200).json(usuario);
     } catch (error) {
         res.status(500).json(printToJson(500, error.message, error))
@@ -36,11 +35,11 @@ async function registrar(req = request, res = response) {
             id_tipo
         });
 
-        const usuarioEproductor = await E_Productor.create({
+        const usuarioDestinatario = await E_Destinataria.create({
             id_usuario: usuarioBase.dataValues.id_usuario
         })
 
-        return res.status(200).json(usuarioEproductor)
+        return res.status(200).json(usuarioDestinatario)
     } catch (error) {
         res.status(500).json(printToJson(500, error.message, error))
     }
@@ -48,7 +47,7 @@ async function registrar(req = request, res = response) {
 
 async function actualizar(req = request, res = response) {
     try {
-        const { usuario, contrasenia, correo, nombre, foto_url, telefono, domicilio, licencia_ambiental, estado, id_tipo, ruc, id_usuario, id_eproductor } = req.body;
+        const { usuario, contrasenia, correo, nombre, foto_url, telefono, domicilio, licencia_ambiental, estado, id_tipo, tipo_empresa, id_usuario, id_edestinataria } = req.body;
 
         const usuarioBase = await Usuario.findByPk(id_usuario);
 
@@ -68,16 +67,13 @@ async function actualizar(req = request, res = response) {
 
         await usuarioBase.save();
 
-        const usuarioEProductor = await E_Productor.findByPk(id_eproductor);
-        usuarioEProductor.ruc = ruc;
-        await usuarioEProductor.save();
+        const usuarioDestinatario = await E_Productor.findByPk(id_edestinataria);
+        usuarioDestinatario.tipo_empresa = tipo_empresa;
+        await usuarioDestinatario.save();
 
-        return res.status(200).json(usuarioEProductor)
+        return res.status(200).json(usuarioDestinatario)
     } catch (error) {
         res.status(500).json(printToJson(500, error.message, error))
     }
 }
-
-
-
 module.exports = { mostrar, mostrarPorCampos, registrar, actualizar }

@@ -7,12 +7,10 @@ const Usuario = sequelize.define('Usuario', {
         primaryKey: true,
         autoIncrement: true,
     },
-    // id_tipo: {
-    //     type: DataTypes.INTEGER,
-    // },
     usuario: {
         type: DataTypes.STRING(50),
         allowNull: false,
+        unique: true,
     },
     contrasenia: {
         type: DataTypes.STRING(150),
@@ -22,30 +20,35 @@ const Usuario = sequelize.define('Usuario', {
         type: DataTypes.STRING(100),
         allowNull: false,
     },
+    identificacion: {
+        type: DataTypes.STRING(15),
+        allowNull: false,
+        // unique: true
+    },
     nombre: {
         type: DataTypes.STRING(100),
-        allowNull: false,
+        allowNull: true,
     },
     foto_url: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+        type: DataTypes.TEXT('long'),
+        allowNull: true,
     },
     telefono: {
         type: DataTypes.STRING(15),
-        allowNull: false,
+        allowNull: true,
     },
     domicilio: {
         type: DataTypes.STRING(100),
-        allowNull: false,
+        allowNull: true,
     },
     licencia_ambiental: {
         type: DataTypes.STRING(50),
-        allowNull: false,
+        allowNull: true,
     },
     estado: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: 0,
+        defaultValue: 1,
     }
 }, {
     timestamps: false,

@@ -1,0 +1,15 @@
+const { Router } = require('express');
+const aeeCtr = require('../controllers/aee.controller');
+
+const router = Router();
+
+
+router.get('/', aeeCtr.mostrar);
+router.get('/empresa-productor', aeeCtr.mostrarAEEProductor);
+router.get('/instalacion/:id', aeeCtr.mostrarAEEInstalacion);
+router.get('/campo/:parameter/:value', aeeCtr.mostrarPorCampos);
+router.post('/', aeeCtr.registrar);
+router.put('/', aeeCtr.actualizar2);
+router.delete('/:id', aeeCtr.eliminar);
+
+module.exports = router;

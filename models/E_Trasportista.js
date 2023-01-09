@@ -9,17 +9,12 @@ const E_Trasportista = sequelize.define('E_Trasportista', {
     },
     plan_contingencia:{
         type: DataTypes.STRING(50),
-        allowNull: false,
+        allowNull: true,
     },
-    lincencia_policia:{
+    licencia_policia:{
         type: DataTypes.STRING(50),
-        allowNull: false,
+        allowNull: true,
     },
-    // estado: {
-    //     type: DataTypes.INTEGER,
-    //     allowNull: false,
-    //     defaultValue: 0,
-    // }
 }, {
     timestamps: false,
     tableName: "E_Trasportista"

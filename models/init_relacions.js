@@ -43,6 +43,16 @@ Transportista.belongsTo(Usuario, {
     targetKey: "id_usuario"
 });
 
+E_Trasportista.hasMany(Transportista, {
+    foreignKey: "id_etrasportista",
+    sourceKey: "id_etrasportista",
+});
+Transportista.belongsTo(E_Trasportista,{
+    foreignKey: "id_etrasportista",
+    targetKey: "id_etrasportista",
+});
+
+
 /* Relacion uno a uno Usuario => E_Destinataria */
 Usuario.hasOne(E_Destinataria, {
     foreignKey: "id_usuario",
@@ -55,11 +65,17 @@ E_Destinataria.belongsTo(Usuario, {
 
 /* Relacion uno a muchos E_Productor => Instalacion */
 E_Productor.hasMany(Instalaciones, {
-    foreignKey: "id_eproductor",
+    foreignKey: {
+        name: "id_eproductor",
+        allowNull: false
+    },
     sourceKey: "id_eproductor",
 });
 Instalaciones.belongsTo(E_Productor,{
-    foreignKey: "id_eproductor",
+    foreignKey: {
+        name: "id_eproductor",
+        allowNull: false
+    },
     targetKey: "id_eproductor",
 });
 
@@ -82,33 +98,33 @@ Manifiesto.belongsToMany(Usuario,{
 });
 
 /* Relacion uno a uno Manifiesto => Manifiesto_Productor */
-Manifiesto.hasOne(Manifiesto_Productor, {
-    foreignKey: "id_manifiesto",
-    sourceKey: "id_manifiesto"
+Manifiesto_Productor.hasOne(Manifiesto, {
+    foreignKey: "id_manifiesto_productor",
+    sourceKey: "id_manifiesto_productor"
 })
-Manifiesto_Productor.belongsTo(Manifiesto, {
-    foreignKey: "id_manifiesto",
-    targetKey: "id_manifiesto"
+Manifiesto.belongsTo(Manifiesto_Productor, {
+    foreignKey: "id_manifiesto_productor",
+    targetKey: "id_manifiesto_productor"
 });
 
 /* Relacion uno a uno Manifiesto => Manifiesto_Transportista */
-Manifiesto.hasOne(Manifiesto_Transportista, {
-    foreignKey: "id_manifiesto",
-    sourceKey: "id_manifiesto"
+Manifiesto_Transportista.hasOne(Manifiesto, {
+    foreignKey: "id_manifiesto_transportista",
+    sourceKey: "id_manifiesto_transportista"
 })
-Manifiesto_Transportista.belongsTo(Manifiesto, {
-    foreignKey: "id_manifiesto",
-    targetKey: "id_manifiesto"
+Manifiesto.belongsTo(Manifiesto_Transportista, {
+    foreignKey: "id_manifiesto_transportista",
+    targetKey: "id_manifiesto_transportista"
 });
 
 /* Relacion uno a uno Manifiesto => Manifiesto_Destinatario */
-Manifiesto.hasOne(Manifiesto_Destinatario, {
-    foreignKey: "id_manifiesto",
-    sourceKey: "id_manifiesto"
+Manifiesto_Destinatario.hasOne(Manifiesto, {
+    foreignKey: "id_manifiesto_destinatario",
+    sourceKey: "id_manifiesto_destinatario"
 })
-Manifiesto_Destinatario.belongsTo(Manifiesto, {
-    foreignKey: "id_manifiesto",
-    sourceKey: "id_manifiesto"
+Manifiesto.belongsTo(Manifiesto_Destinatario, {
+    foreignKey: "id_manifiesto_destinatario",
+    sourceKey: "id_manifiesto_destinatario"
 });
 
 /* Relacion uno a muchos Usuario => Pago */

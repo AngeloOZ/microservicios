@@ -7,9 +7,6 @@ const Instalaciones = sequelize.define('Instalaciones', {
         primaryKey: true,
         autoIncrement: true,
     },
-    id_usuario:{
-        type: DataTypes.INTEGER,
-    },
     nombre_instalacion:{
         type: DataTypes.STRING(100),
         allowNull: false
