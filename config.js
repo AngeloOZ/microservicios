@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 module.exports = {
     api: {
         port: process.env.API_PORT || 3000,
@@ -12,11 +14,11 @@ module.exports = {
         // password: process.env.MYSQL_PASS || 'Milewid@6593#',
         // database: process.env.MYSQL_DB || 'jessicamilena_reciclick',
         // port: process.env.MYSQL_PORT || '3306',
-        host: process.env.MYSQL_HOST || 'db-mysql-nyc1-15127-do-user-12907577-0.b.db.ondigitalocean.com',
-        user: process.env.MYSQL_USER || 'pruebas_root',
-        password: process.env.MYSQL_PASS || 'AVNS_ovk5bOnREAOquWiurEn',
-        database: process.env.MYSQL_DB || 'pruebas_microservicio',
-        port: process.env.MYSQL_PORT || '25060',
+        host: process.env.MYSQL_HOST || '',
+        user: process.env.MYSQL_USER || '',
+        password: process.env.MYSQL_PASS || '',
+        database: process.env.MYSQL_DB || '',
+        port: process.env.MYSQL_PORT || '',
     },
     mysql_local: {
         host: process.env.MYSQL_HOST_LOCAL || 'localhost',
