@@ -107,6 +107,15 @@ Manifiesto.belongsTo(Manifiesto_Productor, {
     targetKey: "id_manifiesto_productor"
 });
 
+Instalaciones.hasOne(Manifiesto_Productor, {
+    foreignKey: "id_instalacion",
+    sourceKey: "id_instalacion"
+})
+Manifiesto_Productor.belongsTo(Instalaciones, {
+    foreignKey: "id_instalacion",
+    targetKey: "id_instalacion"
+});
+
 /* Relacion uno a uno Manifiesto => Manifiesto_Transportista */
 Manifiesto_Transportista.hasOne(Manifiesto, {
     foreignKey: "id_manifiesto_transportista",
