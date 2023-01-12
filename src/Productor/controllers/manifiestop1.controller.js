@@ -48,7 +48,7 @@ async function registrar(req = request, res = response) {
         const token = req.token;
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
-        const { n_registro, n_manifiesto, pagina, instrucciones_especiales, nombre_productor, cargo_productor, correo_productor, telefono_productor, numero_resolutivo, fecha_salida, id_edestinataria, id_etrasportista } = req.body;
+        const { n_registro, n_manifiesto, pagina, instrucciones_especiales, nombre_productor, cargo_productor, correo_productor, telefono_productor, numero_resolutivo, fecha_salida, id_instalacion, id_edestinataria, id_etrasportista } = req.body;
 
         const { data: [empDestinatario] } = await axios.get(`${config.microservicio.auth}empresa-destinatario/campo/id_edestinataria/${id_edestinataria}`);
         if (!empDestinatario) {
@@ -72,7 +72,8 @@ async function registrar(req = request, res = response) {
             correo_productor,
             telefono_productor,
             numero_resolutivo,
-            fecha_salida
+            fecha_salida,
+            id_instalacion
         });
 
         const manifiestoBase = await Manifiesto.create({
