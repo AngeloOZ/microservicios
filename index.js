@@ -5,7 +5,7 @@ const sequelize = require('./models/database');
 const validateToken = require('./middlewares/validateToken');
 require("dotenv").config();
 require("./models/init_relacions");
-// require("./models/inicializar_datos");
+require("./models/inicializar_datos");
 
 const app = express();
 const port = process.env.PORT || 4010;
@@ -48,7 +48,7 @@ app.use(function (req, res, next) {
 app.listen(port, async () => {
     try {
         await sequelize.authenticate();
-        sequelize.sync({ alter: true })
+        // sequelize.sync({ force: true })
         console.log(`Application is listening at port ${port}`);
     } catch (err) {
         console.error(err)
