@@ -58,23 +58,15 @@ async function registrar(req = request, res = response) {
 
 async function actualizar(req = request, res = response) {
     try {
-        const { usuario, contrasenia, correo, nombre, foto_url, telefono, domicilio, licencia_ambiental, estado, id_tipo, plan_contingencia, licencia_policia, id_usuario, id_etransportista } = req.body;
+        const { telefono, domicilio, licencia_ambiental, estado, id_tipo, plan_contingencia, licencia_policia, id_usuario, id_etransportista } = req.body;
 
         const usuarioBase = await Usuario.findByPk(id_usuario);
 
-        usuarioBase.usuario = usuario;
-        usuarioBase.correo = correo;
-        usuarioBase.nombre = nombre;
-        usuarioBase.foto_url = foto_url;
         usuarioBase.telefono = telefono;
         usuarioBase.domicilio = domicilio;
         usuarioBase.licencia_ambiental = licencia_ambiental;
         usuarioBase.estado = estado;
         usuarioBase.id_tipo = id_tipo;
-        if (contrasenia && contrasenia != "") {
-            pwdTemp = await passwordHash(contrasenia);
-            usuarioBase.contrasenia = pwdTemp;
-        }
 
         await usuarioBase.save();
 
