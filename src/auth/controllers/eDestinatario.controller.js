@@ -59,7 +59,7 @@ async function actualizar(req = request, res = response) {
 
         await usuarioBase.save();
 
-        const usuarioDestinatario = await E_Productor.findByPk(id_edestinataria);
+        const usuarioDestinatario = await E_Destinataria.findByPk(id_edestinataria);
         usuarioDestinatario.tipo_empresa = tipo_empresa;
         await usuarioDestinatario.save();
 

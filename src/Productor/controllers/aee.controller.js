@@ -2,6 +2,7 @@ const { request, response } = require('express');
 const { printToJson } = require('../../../helpers/printToJson');
 const Instalaciones = require('../../../models/Instalaciones');
 const AEE = require('../../../models/AEE');
+const { Op } = require('sequelize');
 
 async function mostrar(req = request, res = response) {
     try {
@@ -10,7 +11,15 @@ async function mostrar(req = request, res = response) {
 
         let listadoAEES = [];
         for (const instalacion of instalaciones) {
-            const aees = await AEE.findAll({ where: { "id_instalacion": instalacion.id_instalacion }, include: {all: true} });
+            const aees = await AEE.findAll({
+                where: {
+                    [Op.and]: [
+                        { "id_instalacion": instalacion.id_instalacion },
+                        { "estado": 1 }
+                    ]
+                },
+                include: { all: true }
+            });
             listadoAEES = [...listadoAEES, ...aees];
         }
 
@@ -23,7 +32,14 @@ async function mostrar(req = request, res = response) {
 async function mostrarAEEInstalacion(req = request, res = response) {
     try {
         const { id } = req.params;
-        const aees = await AEE.findAll({ where: { "id_instalacion": id } });
+        const aees = await AEE.findAll({
+            where: {
+                [Op.and]: [
+                    { "id_instalacion": id },
+                    { "estado": 1 }
+                ]
+            }
+        });
         res.status(200).json(aees);
     } catch (error) {
         res.status(500).json(printToJson(500, error.message, error))
