@@ -6,6 +6,7 @@ const router = Router();
 
 
 router.get('/', validateToken, manifiestoCtr.mostrar);
+router.post('/', validateToken, manifiestoCtr.registrar);
 
 
 module.exports = router;

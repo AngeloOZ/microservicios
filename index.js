@@ -38,6 +38,7 @@ app.use('/api/v1/manifiesto-p1', require("./src/Productor/routes/manifiesto.rout
 
 /* Microservicio de transportista */
 app.use('/api/v1/obtener-manifiesto', require('./src/Transportista/routes/manifiesto.routes'));
+app.use('/api/v1/manifiesto-p2', require('./src/Transportista/routes/manifiesto.routes'));
 
 
 
