@@ -36,6 +36,9 @@ app.use('/api/v1/instalaciones', require("./src/Productor/routes/instalaciones.r
 app.use('/api/v1/aee', require("./src/Productor/routes/aee.routes"));
 app.use('/api/v1/manifiesto-p1', require("./src/Productor/routes/manifiesto.routes"));
 
+/* Microservicio de transportista */
+app.use('/api/v1/obtener-manifiesto', require('./src/Transportista/routes/manifiesto.routes'));
+
 
 
 /* -------------------------------------------------------------------------- */
