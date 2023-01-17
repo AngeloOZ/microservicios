@@ -40,7 +40,13 @@ async function mostrarPorId(req = request, res = response) {
                     {
                         model: Manifiesto_Productor,
                         include: {
-                            model: Instalaciones
+                            model: Instalaciones,
+                            include: {
+                                all: true,
+                                include: {
+                                    all: true
+                                }
+                            }
                         }
                     },
                     {
