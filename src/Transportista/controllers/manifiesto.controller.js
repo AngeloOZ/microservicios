@@ -30,39 +30,33 @@ async function mostrarPorId(req = request, res = response) {
     try {
         const { id } = await req.params;
         const token = req.token;
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-        axios.defaults.baseURL = config.microservicio.endpoint2;
 
-        const manifiesto = await UsuarioManifiesto2.findByPk(id, {
-            include: {
-                model: Manifiesto,
-                include: [
-                    {
-                        model: Manifiesto_Productor,
+        const manifiesto = await Manifiesto.findByPk(id, {
+            include: [
+                {
+                    model: Manifiesto_Productor,
+                    include: {
+                        model: Instalaciones,
                         include: {
-                            model: Instalaciones,
+                            all: true,
                             include: {
-                                all: true,
-                                include: {
-                                    all: true
-                                }
+                                all: true
                             }
                         }
-                    },
-                    {
-                        model: Manifiesto_Destinatario
-                    },
-                    {
-                        model: Manifiesto_Transportista
-                    }]
-            }
+                    }
+                },
+                {
+                    model: Manifiesto_Destinatario
+                },
+                {
+                    model: Manifiesto_Transportista
+                }]
         });
-        const idInstalacion = manifiesto.dataValues.Manifiesto?.Manifiesto_Productor?.id_instalacion;
 
-        if (idInstalacion) {
-            const { data: aees } = await axios.get(`aee/instalacion/${idInstalacion}`);
-            manifiesto.dataValues.Manifiesto.Manifiesto_Productor.Instalacione.dataValues.aees = aees;
+        if(!manifiesto){
+            return res.status(404).json(printToJson(404, "No se ha encontrado un manifiesto con ese id"))
         }
+
         return res.status(200).json(manifiesto);
 
     } catch (error) {
