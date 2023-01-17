@@ -6,6 +6,7 @@ const router = Router();
 
 
 router.get('/', validateToken, manifiestoCtr.mostrar);
+router.get('/id/:id', validateToken, manifiestoCtr.mostrarPorId);
 router.post('/', validateToken, manifiestoCtr.registrar);
 
 
