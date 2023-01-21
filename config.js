@@ -15,9 +15,9 @@ module.exports = {
         port: process.env.MYSQL_PORT || '',
     },
     microservicio: {
-        endpoint1: process.env.MICRO_END_1 || "http://localhost:4010/api/v1/",
-        endpoint2: process.env.MICRO_END_2 || "http://localhost:4010/api/v1/",
-        endpoint3: process.env.MICRO_END_3 || "http://localhost:4010/api/v1/",
-        endpoint4: process.env.MICRO_END_4 || "http://localhost:4010/api/v1/",
+        endpoint1: process.env.MICRO_END_1 || "https://angello-midev.store/api/v1/",
+        endpoint2: process.env.MICRO_END_2 || "https://angello-midev.store/api/v1/",
+        endpoint3: process.env.MICRO_END_3 || "https://angello-midev.store/api/v1/",
+        endpoint4: process.env.MICRO_END_4 || "https://angello-midev.store/api/v1/",
     }
 }
