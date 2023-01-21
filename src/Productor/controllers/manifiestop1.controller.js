@@ -19,13 +19,13 @@ async function registrar(req = request, res = response) {
 
         const { n_registro, n_manifiesto, pagina, instrucciones_especiales, nombre_productor, cargo_productor, correo_productor, telefono_productor, numero_resolutivo, fecha_salida, id_instalacion, id_edestinataria, id_etrasportista } = req.body;
 
-        const { data: [empDestinatario] } = await axios.get(`${config.microservicio.endpoint1.auth}empresa-destinatario/campo/id_edestinataria/${id_edestinataria}`);
+        const { data: [empDestinatario] } = await axios.get(`${config.microservicio.endpoint1}empresa-destinatario/campo/id_edestinataria/${id_edestinataria}`);
         if (!empDestinatario) {
             await transaction.rollback();
             return res.status(404).json(printToJson(404, `No existe almacenamiento con id: ${id_edestinataria}`));
         }
 
-        const { data: [empTransportista] } = await axios.get(`${config.microservicio.endpoint1.auth}empresa-transportista/campo/id_etrasportista/${id_etrasportista}`);
+        const { data: [empTransportista] } = await axios.get(`${config.microservicio.endpoint1}empresa-transportista/campo/id_etrasportista/${id_etrasportista}`);
         if (!empTransportista) {
             await transaction.rollback();
             return res.status(404).json(printToJson(404, `No existe empresa transportista con id: ${id_edestinataria}`));
