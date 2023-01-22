@@ -41,6 +41,10 @@ app.use('/api/v1/obtener-manifiesto', require('./src/Transportista/routes/manifi
 app.use('/api/v1/manifiesto-p2', require('./src/Transportista/routes/manifiesto.routes'));
 
 
+/* Microservicio de Destinatario */
+app.use('/api/v1/manifiesto-p3', require('./src/Destinatario/routes/manifiesto.routes'));
+
+
 
 /* -------------------------------------------------------------------------- */
 /*                        Manejo de errores y servidor                        */
@@ -52,7 +56,7 @@ app.use(function (req, res, next) {
 app.listen(port, async () => {
     try {
         await sequelize.authenticate();
-        sequelize.sync({ alter: true })
+        // sequelize.sync({ alter: true })
         console.log(`Application is listening at port ${port}`);
     } catch (err) {
         console.error(err)
