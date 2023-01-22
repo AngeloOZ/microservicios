@@ -11,35 +11,27 @@ const Manifiesto_Destinatario = sequelize.define('Manifiesto_Destinatario', {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    nombre_destinatario_alterno: {
-        type: DataTypes.STRING(150),
-        allowNull: false,
-    },
-    telefono_destinatario_alterno: {
-        type: DataTypes.STRING(15),
-        allowNull: false,
-    },
     fecha_destinatario_alterno: {
         type: DataTypes.STRING(30),
         allowNull: false,
     },
     manejo: {
-        type: DataTypes.STRING(30),
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
     observaciones: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    nombre_destinatario: {
+    nombre_encargado: {
         type: DataTypes.STRING(150),
         allowNull: false,
     },
-    cargo_destinatario: {
+    cargo_encargado: {
         type: DataTypes.STRING(150),
         allowNull: false,
     },
-    fecha_destinatario: {
+    fecha_encargado: {
         type: DataTypes.DATE,
         allowNull: false,
     },

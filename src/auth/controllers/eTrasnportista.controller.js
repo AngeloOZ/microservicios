@@ -36,14 +36,14 @@ async function mostrarPorCampos(req = request, res = response) {
 
 async function registrar(req = request, res = response) {
     try {
-        const { usuario, contrasenia, correo, identificacion, id_tipo, } = req.body;
+        const { usuario, contrasenia, correo, identificacion } = req.body;
 
         const usuarioBase = await Usuario.create({
             usuario,
             contrasenia: await passwordHash(contrasenia),
             correo,
             identificacion,
-            id_tipo
+            id_tipo: 1
         });
 
         const usuarioETransportista = await E_Trasportista.create({
@@ -58,15 +58,13 @@ async function registrar(req = request, res = response) {
 
 async function actualizar(req = request, res = response) {
     try {
-        const { telefono, domicilio, licencia_ambiental, estado, id_tipo, plan_contingencia, licencia_policia, id_usuario, id_etransportista } = req.body;
+        const { telefono, domicilio, licencia_ambiental, plan_contingencia, licencia_policia, id_usuario, id_etransportista } = req.body;
 
         const usuarioBase = await Usuario.findByPk(id_usuario);
 
         usuarioBase.telefono = telefono;
         usuarioBase.domicilio = domicilio;
         usuarioBase.licencia_ambiental = licencia_ambiental;
-        usuarioBase.estado = estado;
-        usuarioBase.id_tipo = id_tipo;
 
         await usuarioBase.save();
 

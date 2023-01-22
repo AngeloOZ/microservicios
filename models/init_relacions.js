@@ -11,8 +11,8 @@ const Manifiesto_Transportista = require("./Manifiesto_Transportista");
 const Tipo = require("./Tipo");
 const Transportista = require("./Transportista");
 const Usuario = require("./Usuario");
-const UsuarioManifiesto = require("./UsuarioManifiesto");
 const UsuarioManifiesto2 = require("./UsuarioManifiesto2");
+const UsuarioManifiesto = require("./UsuarioManifiesto");
 
 /* Relacion uno a uno Usuario = E_productor */
 Usuario.hasOne(E_Productor, {
@@ -137,6 +137,15 @@ Manifiesto_Destinatario.hasOne(Manifiesto, {
 Manifiesto.belongsTo(Manifiesto_Destinatario, {
     foreignKey: "id_manifiesto_destinatario",
     sourceKey: "id_manifiesto_destinatario"
+});
+
+E_Destinataria.hasOne(Manifiesto_Destinatario, {
+    foreignKey: "id_edestinataria_alterno",
+    sourceKey: "id_edestinataria"
+})
+Manifiesto_Destinatario.belongsTo(E_Destinataria, {
+    foreignKey: "id_edestinataria_alterno",
+    sourceKey: "id_edestinataria"
 });
 
 /* Relacion uno a muchos Usuario => Pago 
