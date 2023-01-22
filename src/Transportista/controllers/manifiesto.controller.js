@@ -7,6 +7,8 @@ const Manifiesto_Destinatario = require('../../../models/Manifiesto_Destinatario
 const Manifiesto_Transportista = require('../../../models/Manifiesto_Transportista');
 const { printToJson } = require('../../../helpers/printToJson');
 const Instalaciones = require('../../../models/Instalaciones');
+const { default: axios } = require('axios');
+const config = require('../../../config');
 
 
 
@@ -47,6 +49,8 @@ async function mostrarPorId(req = request, res = response) {
     try {
         const { id } = await req.params;
         const token = req.token;
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        // axios.defaults.baseURL = config.microservicio.endpoint2;
 
         const manifiesto = await Manifiesto.findByPk(id, {
             include: [
@@ -54,10 +58,6 @@ async function mostrarPorId(req = request, res = response) {
                     model: Manifiesto_Productor,
                     include: {
                         model: Instalaciones,
-                        attributes: { exclude: ['id_eproductor'] },
-                        include: {
-                            all: true,
-                        }
                     }
                 },
                 {
@@ -72,25 +72,33 @@ async function mostrarPorId(req = request, res = response) {
             return res.status(404).json(printToJson(404, "No se ha encontrado un manifiesto con ese id"))
         }
 
+        const idManifiesto = manifiesto.dataValues.Manifiesto_Productor.dataValues.id_instalacion;
+        const { data: aees } = await axios.get(config.microservicio.endpoint2 + 'aee/instalacion/' + idManifiesto);
+        manifiesto.dataValues.Manifiesto_Productor.dataValues.Aees = aees;
+
         const usuarios = await UsuarioManifiesto2.findAll({
             where: { id_manifiesto: manifiesto.dataValues.id_manifiesto },
-            attributes: { exclude: ['id_usuario_manifiesto', 'id_manifiesto'] },
-            include: {
-                model: Usuario,
-                attributes: { exclude: ['contrasenia', 'foto_url', 'estado'] },
-                
-            }
         })
 
         for (const user of usuarios) {
-            $nombre = "usuario_productor";
-            if (user.dataValues.id_tipo_usuario == 3)
-                $nombre = "usuario_destinatario";
-            else if (user.dataValues.id_tipo_usuario == 1)
-                $nombre = "usuario_transportista";
-
-            manifiesto.dataValues[$nombre] = user.dataValues.Usuario
-
+            axios.defaults.baseURL = config.microservicio.endpoint1;
+            switch (user.dataValues.id_tipo_usuario) {
+                case 1: {
+                    const { data: usuario } = await axios.get(`empresa-transportista/campo/id_usuario/${user.dataValues.id_usuario}`);
+                    manifiesto.dataValues.empresa_transportista = usuario;
+                    break;
+                }
+                case 2: {
+                    const { data: usuario } = await axios.get(`empresa-productora/campo/id_usuario/${user.dataValues.id_usuario}`);
+                    manifiesto.dataValues.empresa_productor = usuario;
+                    break
+                }
+                case 3: {
+                    const { data: usuario } = await axios.get(`empresa-destinatario/campo/id_usuario/${user.dataValues.id_usuario}`);
+                    manifiesto.dataValues.empresa_destinatario = usuario;
+                    break;
+                }
+            }
         }
 
         return res.status(200).json(manifiesto);
