@@ -54,11 +54,9 @@ async function mostrarPorId(req = request, res = response) {
                     model: Manifiesto_Productor,
                     include: {
                         model: Instalaciones,
+                        attributes: { exclude: ['id_eproductor'] },
                         include: {
                             all: true,
-                            include: {
-                                all: true
-                            }
                         }
                     }
                 },
@@ -72,6 +70,27 @@ async function mostrarPorId(req = request, res = response) {
 
         if (!manifiesto) {
             return res.status(404).json(printToJson(404, "No se ha encontrado un manifiesto con ese id"))
+        }
+
+        const usuarios = await UsuarioManifiesto2.findAll({
+            where: { id_manifiesto: manifiesto.dataValues.id_manifiesto },
+            attributes: { exclude: ['id_usuario_manifiesto', 'id_manifiesto'] },
+            include: {
+                model: Usuario,
+                attributes: { exclude: ['contrasenia', 'foto_url', 'estado'] },
+                
+            }
+        })
+
+        for (const user of usuarios) {
+            $nombre = "usuario_productor";
+            if (user.dataValues.id_tipo_usuario == 3)
+                $nombre = "usuario_destinatario";
+            else if (user.dataValues.id_tipo_usuario == 1)
+                $nombre = "usuario_transportista";
+
+            manifiesto.dataValues[$nombre] = user.dataValues.Usuario
+
         }
 
         return res.status(200).json(manifiesto);

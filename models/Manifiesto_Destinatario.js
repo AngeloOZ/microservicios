@@ -13,7 +13,7 @@ const Manifiesto_Destinatario = sequelize.define('Manifiesto_Destinatario', {
     },
     fecha_destinatario_alterno: {
         type: DataTypes.STRING(30),
-        allowNull: false,
+        allowNull: true
     },
     manejo: {
         type: DataTypes.INTEGER,

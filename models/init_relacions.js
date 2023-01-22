@@ -140,12 +140,18 @@ Manifiesto.belongsTo(Manifiesto_Destinatario, {
 });
 
 E_Destinataria.hasOne(Manifiesto_Destinatario, {
-    foreignKey: "id_edestinataria_alterno",
+    foreignKey: {
+        name: "id_edestinataria_alterno",
+        allowNull: true
+    },
     sourceKey: "id_edestinataria"
 })
 Manifiesto_Destinatario.belongsTo(E_Destinataria, {
-    foreignKey: "id_edestinataria_alterno",
-    sourceKey: "id_edestinataria"
+    foreignKey: {
+        name: "id_edestinataria_alterno",
+        allowNull: true
+    },
+    sourceKey: "id_edestinataria",
 });
 
 /* Relacion uno a muchos Usuario => Pago 
