@@ -7,6 +7,10 @@ const UsuarioManifiesto2 = sequelize.define('UsuarioManifiesto2', {
         primaryKey: true,
         autoIncrement: true,
     },
+    id_tipo_usuario: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    }
 }, {
     timestamps: false,
     tableName: "UsuarioManifiesto2"

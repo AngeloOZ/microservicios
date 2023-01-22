@@ -53,17 +53,20 @@ async function registrar(req = request, res = response) {
 
         await UsuarioManifiesto2.create({
             id_usuario: payloadToken.usuario.id_usuario,
-            id_manifiesto: manifiestoBase.dataValues.id_manifiesto
+            id_manifiesto: manifiestoBase.dataValues.id_manifiesto,
+            id_tipo_usuario: 2
         })
 
         await UsuarioManifiesto2.create({
             id_usuario: empDestinatario.Usuario.id_usuario,
-            id_manifiesto: manifiestoBase.dataValues.id_manifiesto
+            id_manifiesto: manifiestoBase.dataValues.id_manifiesto,
+            id_tipo_usuario: 3
         })
 
         await UsuarioManifiesto2.create({
             id_usuario: empTransportista.Usuario.id_usuario,
-            id_manifiesto: manifiestoBase.dataValues.id_manifiesto
+            id_manifiesto: manifiestoBase.dataValues.id_manifiesto,
+            id_tipo_usuario: 1
         })
 
         await transaction.commit();

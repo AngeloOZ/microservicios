@@ -7,8 +7,7 @@ const Manifiesto_Destinatario = require('../../../models/Manifiesto_Destinatario
 const Manifiesto_Transportista = require('../../../models/Manifiesto_Transportista');
 const { printToJson } = require('../../../helpers/printToJson');
 const Instalaciones = require('../../../models/Instalaciones');
-const { default: axios } = require('axios');
-const config = require('../../../config');
+
 
 
 async function mostrar(req = request, res = response) {
@@ -16,8 +15,26 @@ async function mostrar(req = request, res = response) {
         const { id_usuario } = req.currentToken;
 
         const manifiestos = await UsuarioManifiesto2.findAll({
-            where: { 'id_usuario': id_usuario }, include: { model: Manifiesto, include: [{ model: Manifiesto_Productor, }, { model: Manifiesto_Destinatario }, { model: Manifiesto_Transportista }] }
+            where: { 'id_usuario': id_usuario },
+            include: {
+                model: Manifiesto,
+            }
         });
+
+        for (const manifiesto of manifiestos) {
+            const query = await UsuarioManifiesto2.findAll({
+                where: {
+                    id_manifiesto: manifiesto.id_manifiesto,
+                },
+                include: {
+                    model: Usuario,
+                    attributes: { exclude: ['contrasenia', 'foto_url', 'estado', 'id_tipo'] }
+                },
+                attributes: { exclude: ['id_usuario_manifiesto', 'id_manifiesto'] }
+            })
+            manifiesto.dataValues.Manifiesto.dataValues.usuarios = query;
+
+        }
 
         return res.status(200).json(manifiestos);
 
@@ -53,7 +70,7 @@ async function mostrarPorId(req = request, res = response) {
                 }]
         });
 
-        if(!manifiesto){
+        if (!manifiesto) {
             return res.status(404).json(printToJson(404, "No se ha encontrado un manifiesto con ese id"))
         }
 
