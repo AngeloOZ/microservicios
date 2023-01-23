@@ -19,5 +19,12 @@ module.exports = {
         endpoint2: process.env.MICRO_END_2 || "https://angello-midev.store/api/v1/",
         endpoint3: process.env.MICRO_END_3 || "https://angello-midev.store/api/v1/",
         endpoint4: process.env.MICRO_END_4 || "https://angello-midev.store/api/v1/",
+    },
+    email: {
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        user: "reciclick.app@gmail.com",
+        pass: "xkyfgmupgmumzqrd"
     }
 }

@@ -11,7 +11,6 @@ const { default: axios } = require('axios');
 const config = require('../../../config');
 
 
-
 async function mostrar(req = request, res = response) {
     try {
         const { id_usuario } = req.currentToken;
@@ -64,7 +63,8 @@ async function mostrarPorId(req = request, res = response) {
                     model: Manifiesto_Destinatario
                 },
                 {
-                    model: Manifiesto_Transportista
+                    model: Manifiesto_Transportista,
+                    include: "Transportistum"
                 }]
         });
 
