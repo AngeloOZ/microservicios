@@ -100,12 +100,17 @@ async function mostrarPorId(req = request, res = response) {
             }
         }
 
-        const idTransportista = manifiesto.dataValues.Manifiesto_Transportistum.dataValues.id_transportista;
-        const { data: transportista } = await axios.get(`usuario-transportista/campo/id_transportista/${idTransportista}`);
+        const idTransportista = manifiesto?.dataValues?.Manifiesto_Transportistum?.dataValues?.id_transportista;
+        let transportista = null;
+        if(idTransportista){
+            const { data: usuario } = await axios.get(`usuario-transportista/campo/id_transportista/${idTransportista}`);
+            transportista = usuario;
+        }
         manifiesto.dataValues.usuario_transportista = transportista;
 
+
         let usuarioDestAlt = null;
-        const idDestinoAlterno = manifiesto.dataValues.Manifiesto_Destinatario.dataValues.id_edestinataria_alterno;
+        const idDestinoAlterno = manifiesto?.dataValues?.Manifiesto_Destinatario?.dataValues?.id_edestinataria_alterno;
         if (idDestinoAlterno) {
             const { data: usuario } = await axios.get(`empresa-destinatario/campo/id_edestinataria/${idDestinoAlterno}`);
             usuarioDestAlt = usuario;
@@ -115,6 +120,7 @@ async function mostrarPorId(req = request, res = response) {
         return res.status(200).json(manifiesto);
 
     } catch (error) {
+        console.error(error);
         return res.status(500).json({ message: error.message })
     }
 }

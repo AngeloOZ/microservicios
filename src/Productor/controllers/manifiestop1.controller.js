@@ -8,6 +8,7 @@ const sequelize = require('../../../models/database');
 const Manifiesto = require('../../../models/Manifiesto');
 const UsuarioManifiesto2 = require('../../../models/UsuarioManifiesto2');
 const Manifiesto_Productor = require('../../../models/Manifiesto_Productor');
+const { enviarCorreo } = require('../../../helpers/nodemailer');
 
 
 async function registrar(req = request, res = response) {
@@ -68,6 +69,18 @@ async function registrar(req = request, res = response) {
             id_manifiesto: manifiestoBase.dataValues.id_manifiesto,
             id_tipo_usuario: 1
         })
+
+        // await enviarCorreo({ 
+        //     correo: empDestinatario.Usuario.correo,
+        //     nombre: empDestinatario.Usuario.nombre,
+        //     numero_manifiesto: manifiestoBase.dataValues.id_manifiesto,
+        // })
+
+        // await enviarCorreo({ 
+        //     correo: empTransportista.Usuario.correo,
+        //     nombre: empTransportista.Usuario.nombre,
+        //     numero_manifiesto: manifiestoBase.dataValues.id_manifiesto,
+        // })
 
         await transaction.commit();
         return res.status(201).json(printToJson(201, "Primera parte de manifiesto creada"));
