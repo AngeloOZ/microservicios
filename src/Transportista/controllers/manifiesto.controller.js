@@ -63,8 +63,7 @@ async function mostrarPorId(req = request, res = response) {
                     model: Manifiesto_Destinatario
                 },
                 {
-                    model: Manifiesto_Transportista,
-                    include: "Transportistum"
+                    model: Manifiesto_Transportista
                 }]
         });
 
@@ -80,8 +79,8 @@ async function mostrarPorId(req = request, res = response) {
             where: { id_manifiesto: manifiesto.dataValues.id_manifiesto },
         })
 
+        axios.defaults.baseURL = config.microservicio.endpoint1;
         for (const user of usuarios) {
-            axios.defaults.baseURL = config.microservicio.endpoint1;
             switch (user.dataValues.id_tipo_usuario) {
                 case 1: {
                     const { data: usuario } = await axios.get(`empresa-transportista/campo/id_usuario/${user.dataValues.id_usuario}`);
@@ -100,6 +99,18 @@ async function mostrarPorId(req = request, res = response) {
                 }
             }
         }
+
+        const idTransportista = manifiesto.dataValues.Manifiesto_Transportistum.dataValues.id_transportista;
+        const { data: transportista } = await axios.get(`usuario-transportista/campo/id_transportista/${idTransportista}`);
+        manifiesto.dataValues.usuario_transportista = transportista;
+
+        let usuarioDestAlt = null;
+        const idDestinoAlterno = manifiesto.dataValues.Manifiesto_Destinatario.dataValues.id_edestinataria_alterno;
+        if (idDestinoAlterno) {
+            const { data: usuario } = await axios.get(`empresa-destinatario/campo/id_edestinataria/${idDestinoAlterno}`);
+            usuarioDestAlt = usuario;
+        }
+        manifiesto.dataValues.destinatario_alterno= usuarioDestAlt;
 
         return res.status(200).json(manifiesto);
 
