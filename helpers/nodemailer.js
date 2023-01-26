@@ -12,11 +12,17 @@ const fs = require('fs');
 const transporter = nodemailer.createTransport({
     host: config.email.host,
     port: config.email.port,
-    secure: false, // true for 465, false for other ports
+    secure: config.email.secure, // true for 465, false for other ports
     auth: {
         user: config.email.user, // generated ethereal user
         pass: config.email.pass, // generated ethereal password
     },
+});
+
+transporter.verify().then(() => {
+    console.log("correo funcionando");
+}).catch((error) => {
+    console.log(error);
 });
 
 /**
@@ -50,5 +56,10 @@ const enviarCorreo = async (configEnvio) => {
         return false;
     }
 }
+
+(async () => {
+    let testAccount = await nodemailer.createTestAccount();
+    console.log(testAccount);
+})
 
 module.exports = { transporter, enviarCorreo };

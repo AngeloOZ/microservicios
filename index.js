@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors')
 const cookieParser = require('cookie-parser');
 const sequelize = require('./models/database');
+const { enviarCorreo } = require('./helpers/nodemailer');
 require("dotenv").config();
 require("./models/init_relacions");
 require("./models/inicializar_datos");

@@ -24,7 +24,9 @@ module.exports = {
         host: "smtp.gmail.com",
         port: 587,
         secure: false,
-        user: "cruzc51@gmail.com",
-        pass: "rkixvqziorjmitdw"
+        // user: "pruebaemail198@gmail.com",
+        // pass: "lokera123"
+        user: "reciclick.app@gmail.com",
+        pass: "friizeiskejnnvmq"
     }
 }
