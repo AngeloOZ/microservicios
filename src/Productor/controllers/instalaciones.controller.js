@@ -95,5 +95,18 @@ async function actualizar2(req = request, res = response) {
     }
 }
 
+async function eliminar(req = request, res = response) {
+    try {
+        const { id } = req.params;
+        const instalacion = await Instalaciones.findByPk(id);
+        instalacion.estado = 0;
+        await instalacion.save();
 
-module.exports = { mostrar, mostrarPorCampos, registrar, actualizar, actualizar2 }
+        return res.status(204).json(printToJson(204, "Instalación eliminada"));
+    } catch (error) {
+        res.status(500).json(printToJson(500, error.message, error))
+    }
+}
+
+
+module.exports = { mostrar, mostrarPorCampos, registrar, actualizar, actualizar2, eliminar }

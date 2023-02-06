@@ -9,5 +9,6 @@ router.get('/', validateToken, instalacionCtr.mostrar);
 router.get('/campo/:parameter/:value', validateToken, instalacionCtr.mostrarPorCampos);
 router.post('/', validateToken, instalacionCtr.registrar);
 router.put('/', validateToken, instalacionCtr.actualizar2);
+router.delete('/:id', validateToken, instalacionCtr.eliminar);
 
 module.exports = router;
