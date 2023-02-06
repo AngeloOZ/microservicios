@@ -43,6 +43,7 @@ app.use('/api/v1/manifiesto-p2', require('./src/Transportista/routes/manifiesto.
 
 /* Microservicio de Destinatario */
 app.use('/api/v1/manifiesto-p3', require('./src/Destinatario/routes/manifiesto.routes'));
+app.use('/api/v1/reporte', require('./src/Destinatario/routes/reportes.routes'));
 
 
 

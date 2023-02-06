@@ -15,6 +15,11 @@ const Manifiesto = sequelize.define('Manifiesto', {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0,
+    },
+    fecha_creacion: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        defaultValue: DataTypes.NOW,
     }
 }, {
     timestamps: false,

@@ -9,5 +9,6 @@ router.get('/', validateToken, transportistaCtrl.mostrar);
 router.get('/campo/:parameter/:value', validateToken, transportistaCtrl.mostrarPorCampos);
 router.post('/', validateToken, transportistaCtrl.registrar);
 router.put('/', validateToken, transportistaCtrl.actualizar);
+router.delete('/:id', validateToken, transportistaCtrl.eliminar);
 
 module.exports = router;

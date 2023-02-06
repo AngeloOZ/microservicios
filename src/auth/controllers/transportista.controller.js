@@ -7,7 +7,8 @@ const Usuario = require('../../../models/Usuario');
 
 async function mostrar(req = request, res = response) {
     try {
-        const usuarios = await Transportista.findAll({ include: Usuario });
+        const usuarios = await Transportista.findAll({ include: Usuario, where: { 
+            id_etrasportista: req.currentToken.id_etrasportista } });
         res.status(200).json(usuarios);
     } catch (error) {
         res.status(500).json(printToJson(500, error.message, error));
@@ -27,19 +28,25 @@ async function mostrarPorCampos(req = request, res = response) {
 async function registrar(req = request, res = response) {
     try {
         const token = req.currentToken;
-        const { usuario, contrasenia, correo, identificacion } = req.body;
+        const { usuario, contrasenia, correo, identificacion, telefono, domicilio, licencia_ambiental, cargo, tipo_auto, placa } = req.body;
 
         const usuarioBase = await Usuario.create({
             usuario,
             contrasenia: await passwordHash(contrasenia),
             correo,
             identificacion,
-            id_tipo: 4
+            id_tipo: 4,
+            telefono,
+            domicilio,
+            licencia_ambiental
         });
 
         const usuarioTransportista = await Transportista.create({
             id_usuario: usuarioBase.dataValues.id_usuario,
-            id_etrasportista: token.id_etrasportista
+            id_etrasportista: token.id_etrasportista,
+            cargo,
+            tipo_auto,
+            placa
         })
 
         return res.status(200).json(usuarioTransportista)
@@ -57,7 +64,7 @@ async function actualizar(req = request, res = response) {
         usuarioBase.telefono = telefono;
         usuarioBase.domicilio = domicilio;
         usuarioBase.licencia_ambiental = licencia_ambiental;
-        
+
         await usuarioBase.save();
 
         const usuarioTransportista = await Transportista.findByPk(id_transportista);
@@ -73,4 +80,18 @@ async function actualizar(req = request, res = response) {
     }
 }
 
-module.exports = { mostrar, mostrarPorCampos, registrar, actualizar }
+async function eliminar(req = request, res = response) {
+    try {
+        const { id } = req.params;
+
+        const usuarioBase = await Usuario.findByPk(id);
+        usuarioBase.estado = 0;
+        await usuarioBase.save();
+
+        return res.status(204).json(usuarioBase)
+    } catch (error) {
+        res.status(500).json(printToJson(500, error.message, error))
+    }
+}
+
+module.exports = { mostrar, mostrarPorCampos, registrar, actualizar, eliminar }
