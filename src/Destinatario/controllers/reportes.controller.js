@@ -56,7 +56,6 @@ async function reporte_toneladas_aee(req = request, res = response) {
             datasets: [],
         }
 
-
         for (const manifiesto of manifiestos) {
             const id = manifiesto.Manifiesto.Manifiesto_Productor.id_instalacion;
             const { data: aeees } = await axios.get(`aee/instalacion/${id}`);
